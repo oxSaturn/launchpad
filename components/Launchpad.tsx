@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useAccount, useBalance, useNetwork } from "wagmi";
+import Image from "next/image";
+import { useAccount, useNetwork, useWaitForTransaction } from "wagmi";
 import * as Toast from "@radix-ui/react-toast";
 import { formatUnits, parseEther, parseUnits, zeroAddress } from "viem";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
@@ -7,19 +8,9 @@ import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import {
   useErc20Allowance,
   useErc20Approve,
-  useErc20Decimals,
-  useErc20Symbol,
   useFairAuctionBuy,
   useFairAuctionClaim,
   useFairAuctionGetExpectedClaimAmount,
-  useFairAuctionGetRemainingTime,
-  useFairAuctionHasEnded,
-  useFairAuctionHasStarted,
-  useFairAuctionMaxProjectTokensToDistribute,
-  useFairAuctionMaxRaise,
-  useFairAuctionMinTotalRaisedForMaxProjectToken,
-  useFairAuctionProjectToken,
-  useFairAuctionSaleToken,
   useFairAuctionTotalRaised,
   useFairAuctionUserInfo,
   usePrepareErc20Approve,
@@ -27,11 +18,16 @@ import {
   usePrepareFairAuctionClaim,
 } from "../lib/generated/wagmiGen";
 import { fairAuctionContractAddresses } from "../lib/config";
+import {
+  useProjectTokenData,
+  useSaleTokenData,
+  useTimeAndPrice,
+} from "../lib/hooks/launchpad";
 
 export function Launchpad() {
   const [toastOpen, setToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
-  const [toastHash, setToastHash] = useState("");
+  const [toastHash, setToastHash] = useState<`0x${string}`>();
 
   const [amount, setAmount] = useState("");
 
@@ -40,41 +36,25 @@ export function Launchpad() {
   const { address } = useAccount();
   const { chain } = useNetwork();
 
-  const { data: saleTokenAddress } = useFairAuctionSaleToken({
-    enabled: !!address && !chain?.unsupported,
-  });
-  const { data: saleTokenSymbol } = useErc20Symbol({
-    address: saleTokenAddress,
-  });
-  const { data: saleTokenDecimals } = useErc20Decimals({
-    address: saleTokenAddress,
-  });
-  const { data: saleTokenData } = useBalance({
-    address,
-    token: saleTokenAddress,
-    watch: true,
-  });
+  const {
+    saleTokenAddress,
+    saleTokenDecimals,
+    saleTokenSymbol,
+    saleTokenBalance,
+  } = useSaleTokenData();
+  const { projectTokenSymbol, projectTokenDecimals } = useProjectTokenData();
 
-  const { data: allowance } = useErc20Allowance({
-    address: saleTokenAddress,
-    args: [address!, fairAuctionContractAddresses[chain?.id as 7700 | 42161]],
-    enabled: !!address && !chain?.unsupported,
-  });
+  const { data: allowance, isFetching: isFetchingAllowance } =
+    useErc20Allowance({
+      address: saleTokenAddress,
+      args: [address!, fairAuctionContractAddresses[chain?.id as 7700 | 42161]],
+      enabled: !!address && !chain?.unsupported,
+    });
   const needsApproval = !isEnoughAllowance(
     allowance,
     saleTokenDecimals,
     amount as `${number}`
   );
-
-  const { data: projectTokenAddress } = useFairAuctionProjectToken({
-    enabled: !chain?.unsupported,
-  });
-  const { data: projectTokenSymbol } = useErc20Symbol({
-    address: projectTokenAddress,
-  });
-  const { data: projectTokenDecimals } = useErc20Decimals({
-    address: projectTokenAddress,
-  });
 
   const { data: totalRaised } = useFairAuctionTotalRaised({
     enabled: !chain?.unsupported && !!saleTokenDecimals,
@@ -120,7 +100,7 @@ export function Launchpad() {
       hasStarted &&
       !hasEnded,
   });
-  const { write: approve } = useErc20Approve({
+  const { write: approve, isLoading: isApproving } = useErc20Approve({
     ...approveConfig,
     onSuccess(data) {
       setToastOpen(true);
@@ -142,7 +122,7 @@ export function Launchpad() {
       hasStarted &&
       !hasEnded,
   });
-  const { write: buy } = useFairAuctionBuy({
+  const { write: buy, isLoading: isBuying } = useFairAuctionBuy({
     ...buyConfig,
     onSuccess(data) {
       setToastOpen(true);
@@ -158,7 +138,7 @@ export function Launchpad() {
   const { config: claimConfig } = usePrepareFairAuctionClaim({
     enabled: !!address && !chain?.unsupported && hasEnded,
   });
-  const { write: claim } = useFairAuctionClaim({
+  const { write: claim, isLoading: isClaiming } = useFairAuctionClaim({
     ...claimConfig,
     onSuccess(data) {
       setToastOpen(true);
@@ -171,14 +151,25 @@ export function Launchpad() {
     },
   });
 
+  const { isFetching: isWaitingForTx } = useWaitForTransaction({
+    hash: toastHash,
+  });
+
   const setMaxAmount = () => {
-    if (saleTokenData) {
-      setAmount(saleTokenData.formatted);
+    if (saleTokenBalance) {
+      setAmount(saleTokenBalance.formatted);
     }
   };
   return (
     <>
       <div className="flex min-w-[1024px] flex-col gap-3">
+        <Image
+          alt="DMT"
+          src="/dmt.png"
+          width={160}
+          height={62.5}
+          layout="fixed"
+        />
         <div className="mb-4 flex w-full items-center justify-between">
           <div className="flex flex-col gap-1">
             <div>Total raised</div>
@@ -207,7 +198,7 @@ export function Launchpad() {
               <input
                 disabled={!hasStarted || hasEnded}
                 onChange={(e) => setAmount(e.target.value)}
-                className={`w-full border-none bg-transparent p-4 text-left text-base focus:outline focus:outline-1 ${
+                className={`w-full rounded border-none bg-transparent p-4 text-left text-base outline outline-1 outline-primary ${
                   !isValidInput(amount) && amount !== ""
                     ? "text-error focus:outline-error focus-visible:outline-error"
                     : "focus:outline-secondary focus-visible:outline-secondary"
@@ -221,7 +212,7 @@ export function Launchpad() {
                 MAX
               </button>
               <div className="absolute bottom-1 right-3 text-xs text-secondary">
-                Balance: {formatCurrency(saleTokenData?.formatted)}{" "}
+                Balance: {formatCurrency(saleTokenBalance?.formatted)}{" "}
                 {saleTokenSymbol ?? "ETH"}
               </div>
             </div>
@@ -239,7 +230,15 @@ export function Launchpad() {
               </div>
             </div>
             <button
-              disabled={needsApproval ? !approve : hasEnded ? !claim : !buy}
+              disabled={
+                isFetchingAllowance ||
+                isWaitingForTx ||
+                (needsApproval
+                  ? !approve || isApproving
+                  : hasEnded
+                  ? !claim || isClaiming
+                  : !buy || isBuying)
+              }
               onClick={
                 needsApproval
                   ? () => approve?.()
@@ -306,47 +305,6 @@ const isEnoughAllowance = (
   if (!allowance || !decimals) return false;
   const readableAllowance = formatUnits(allowance, decimals);
   return +readableAllowance >= +amount;
-};
-
-const useTimeAndPrice = (saleTokenDecimals: number | undefined) => {
-  const { data: totalRaised } = useFairAuctionTotalRaised({
-    enabled: !!saleTokenDecimals,
-  });
-  const { data: hasStarted } = useFairAuctionHasStarted();
-  const { data: hasEnded } = useFairAuctionHasEnded();
-  const { data: remainingTime } = useFairAuctionGetRemainingTime();
-  const { data: tokensToDistribute } =
-    useFairAuctionMaxProjectTokensToDistribute();
-  const { data: minNoteToRaise } =
-    useFairAuctionMinTotalRaisedForMaxProjectToken();
-  const { data: maxRaiseAmount } = useFairAuctionMaxRaise();
-
-  if (
-    !totalRaised ||
-    !tokensToDistribute ||
-    !minNoteToRaise ||
-    !maxRaiseAmount ||
-    !saleTokenDecimals
-  ) {
-    return {
-      hasEnded,
-      hasStarted,
-      remainingTime,
-      tokenPrice: undefined,
-    };
-  }
-
-  const tokenPrice =
-    totalRaised <= minNoteToRaise
-      ? minNoteToRaise / tokensToDistribute
-      : totalRaised / tokensToDistribute;
-
-  return {
-    hasEnded,
-    hasStarted,
-    remainingTime,
-    tokenPrice: formatUnits(tokenPrice, saleTokenDecimals),
-  };
 };
 
 const formatCurrency = (value: string | undefined) => {
