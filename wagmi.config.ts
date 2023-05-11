@@ -1,25 +1,22 @@
 import { defineConfig } from '@wagmi/cli'
 import {  react } from '@wagmi/cli/plugins'
-import { erc20ABI } from 'wagmi'
-import { arbitrum, canto } from 'wagmi/chains'
+import { erc20ABI } from "wagmi";
 
-import { fairAuctionABI } from './lib/abis/fairAuction'
+import { fairAuctionABI } from "./lib/abis/fairAuction";
+import { fairAuctionContractAddresses } from "./lib/config";
 
 export default defineConfig({
-  out: 'lib/generated/wagmiGen.ts',
+  out: "lib/generated/wagmiGen.ts",
   contracts: [
     {
-      name: 'erc20',
+      name: "erc20",
       abi: erc20ABI,
     },
     {
-      name: 'FairAuction',
+      name: "FairAuction",
       abi: fairAuctionABI,
-      address: {
-        [arbitrum.id]: '0x0b776552c1aef1dc33005dd25acda22493b6615d', // TODO placeholders
-        [canto.id]: '0x0b776552c1aef1dc33005dd25acda22493b6615d',
-      }
-    }
+      address: fairAuctionContractAddresses,
+    },
   ],
   plugins: [react()],
-})
+});

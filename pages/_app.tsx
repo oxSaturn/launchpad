@@ -1,9 +1,14 @@
 import { useState, useEffect } from "react";
 import NextHead from "next/head";
 import type { AppProps } from "next/app";
-import { getDefaultWallets, RainbowKitProvider, darkTheme } from "@rainbow-me/rainbowkit";
+import {
+  getDefaultWallets,
+  RainbowKitProvider,
+  darkTheme,
+} from "@rainbow-me/rainbowkit";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import { arbitrum, canto } from "wagmi/chains";
+import * as Toast from "@radix-ui/react-toast";
 
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
@@ -45,17 +50,25 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => setMounted(true), []);
   return (
     <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider chains={chains} initialChain={arbitrum} theme={darkTheme({
+      <RainbowKitProvider
+        chains={chains}
+        initialChain={arbitrum}
+        showRecentTransactions={true}
+        theme={darkTheme({
           accentColor: "rgb(0, 243, 203)",
           accentColorForeground: "#222222",
           borderRadius: "small",
           fontStack: "rounded",
           overlayBlur: "small",
-        })}>
+        })}
+      >
         <NextHead>
           <title>Launchpad</title>
           <meta property="og:title" content="Launchpad" />
-          <meta property="og:description" content="Velocimeter MultiChain Launchpad" />
+          <meta
+            property="og:description"
+            content="Velocimeter MultiChain Launchpad"
+          />
           <meta name="description" content="Velocimeter MultiChain Launchpad" />
           <meta
             name="keywords"
@@ -64,9 +77,11 @@ function MyApp({ Component, pageProps }: AppProps) {
           <link rel="icon" href="/images/logo-icon.png" />
         </NextHead>
         {mounted && (
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
+          <Toast.Provider swipeDirection="right">
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </Toast.Provider>
         )}
       </RainbowKitProvider>
     </WagmiConfig>

@@ -19,7 +19,7 @@ module.exports = {
         siebB: ["SIEBB", ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        primary: "#82D173",
+        primary: "#2ebe2b",
         secondary: "#05955b",
         accent: "#ffda58",
         neutral: "#222222",
@@ -32,22 +32,6 @@ module.exports = {
         "gradient-radial": "radial-gradient(ellipse, var(--tw-gradient-stops))",
       },
       keyframes: {
-        slideDownAndFade: {
-          from: { opacity: 0, transform: "translateY(-2px)" },
-          to: { opacity: 1, transform: "translateY(0)" },
-        },
-        slideLeftAndFade: {
-          from: { opacity: 0, transform: "translateX(2px)" },
-          to: { opacity: 1, transform: "translateX(0)" },
-        },
-        slideUpAndFade: {
-          from: { opacity: 0, transform: "translateY(2px)" },
-          to: { opacity: 1, transform: "translateY(0)" },
-        },
-        slideRightAndFade: {
-          from: { opacity: 0, transform: "translateX(-2px)" },
-          to: { opacity: 1, transform: "translateX(0)" },
-        },
         hide: {
           from: { opacity: 1 },
           to: { opacity: 0 },
@@ -64,13 +48,6 @@ module.exports = {
         },
       },
       animation: {
-        slideDownAndFade:
-          "slideDownAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
-        slideLeftAndFade:
-          "slideLeftAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
-        slideUpAndFade: "slideUpAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
-        slideRightAndFade:
-          "slideRightAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
         hide: "hide 100ms ease-in",
         slideIn: "slideIn 150ms cubic-bezier(0.16, 1, 0.3, 1)",
         swipeOut: "swipeOut 100ms ease-out",
