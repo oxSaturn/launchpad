@@ -47,7 +47,10 @@ export function Launchpad() {
   const { data: allowance, isFetching: isFetchingAllowance } =
     useErc20Allowance({
       address: saleTokenAddress,
-      args: [address!, fairAuctionContractAddresses[chain?.id as 7700 | 42161]],
+      args: [
+        address!,
+        fairAuctionContractAddresses[chain?.id as 7700 | 42161 | 421613],
+      ],
       enabled: !!address && !chain?.unsupported,
     });
   const needsApproval = !isEnoughAllowance(
@@ -88,7 +91,7 @@ export function Launchpad() {
   const { config: approveConfig } = usePrepareErc20Approve({
     address: saleTokenAddress,
     args: [
-      fairAuctionContractAddresses[chain?.id as 7700 | 42161],
+      fairAuctionContractAddresses[chain?.id as 7700 | 42161 | 421613],
       parseUnits(amount as `${number}`, saleTokenDecimals!),
     ],
     enabled:
@@ -153,6 +156,10 @@ export function Launchpad() {
 
   const { isFetching: isWaitingForTx } = useWaitForTransaction({
     hash: toastHash,
+    onSuccess: () => {
+      setToastHash(undefined);
+      setToastMessage("");
+    },
   });
 
   const setMaxAmount = () => {
@@ -268,10 +275,10 @@ export function Launchpad() {
         <Toast.Action
           className="[grid-area:_action]"
           asChild
-          altText="Look on tuber build with hash"
+          altText="Look on arbiscan with hash"
         >
           <a
-            href={`https://tuber.build/tx/${toastHash}`}
+            href={`https://arbiscan.io/tx/${toastHash}`}
             target="_blank"
             rel="noreferrer noopener"
             className="text-sm text-secondary underline transition-colors hover:text-primary hover:no-underline"
