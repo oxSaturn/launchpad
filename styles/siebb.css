@@ -1,0 +1,15 @@
+@font-face {
+    font-family: "SIEBB";
+    src: url("/fonts/SIEBB.ttf");
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+  }
+
+@font-face {
+    font-family: "SIEBRG";
+    src: url("/fonts/SIEBRG.ttf");
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+  }
