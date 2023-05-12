@@ -22,7 +22,11 @@ import {
   useProjectTokenData,
   useSaleTokenData,
   useTimeAndPrice,
+  useTimer,
 } from "../lib/hooks/launchpad";
+
+const SECOND = 1_000;
+const MINUTE = SECOND * 60;
 
 export function Launchpad() {
   const [toastOpen, setToastOpen] = useState(false);
@@ -65,9 +69,10 @@ export function Launchpad() {
   const { data: totalRaised } = useFairAuctionTotalRaised({
     enabled: !chain?.unsupported && !!saleTokenDecimals,
     select: (data) => formatUnits(data, saleTokenDecimals!),
+    watch: true,
   });
 
-  const { data: userInfo } = useFairAuctionUserInfo({
+  const { data: userInfo, refetch: refetchUserInfo } = useFairAuctionUserInfo({
     enabled:
       !!address &&
       !chain?.unsupported &&
@@ -82,14 +87,16 @@ export function Launchpad() {
     },
   });
 
-  const { data: expectedClaimAmount } = useFairAuctionGetExpectedClaimAmount({
-    enabled: !!address && !chain?.unsupported && !!projectTokenDecimals,
-    args: [address!],
-    select: (data) => formatUnits(data, projectTokenDecimals!),
-  });
+  const { data: expectedClaimAmount, refetch: refetchClaimAmount } =
+    useFairAuctionGetExpectedClaimAmount({
+      enabled: !!address && !chain?.unsupported && !!projectTokenDecimals,
+      args: [address!],
+      select: (data) => formatUnits(data, projectTokenDecimals!),
+    });
 
   const { hasEnded, hasStarted, remainingTime, tokenPrice } =
     useTimeAndPrice(saleTokenDecimals);
+  const { days, hours, minutes } = useTimer(remainingTime, MINUTE);
 
   const { config: approveConfig } = usePrepareErc20Approve({
     address: saleTokenAddress,
@@ -170,6 +177,8 @@ export function Launchpad() {
       setToastHash(undefined);
       setToastMessage("");
       refetchAllowance();
+      refetchUserInfo();
+      refetchClaimAmount();
     },
   });
 
@@ -210,10 +219,8 @@ export function Launchpad() {
             </div>
           </div>
           <div className="flex flex-col gap-1">
-            <div>Status</div>
-            <div className="font-siebB">
-              {!hasStarted ? "Not started" : !hasEnded ? "In process" : "Ended"}
-            </div>
+            <div>Remaining time</div>
+            <div className="font-siebB">{`${days}d ${hours}h ${minutes}m`}</div>
           </div>
         </div>
         <div className="flex w-full flex-col-reverse items-center justify-between lg:flex-row ">
@@ -344,8 +351,10 @@ const isEnoughAllowance = (
 const formatCurrency = (value: string | undefined) => {
   if (!value) return "0.00";
   if (isValidInput(value)) {
-    return parseFloat(value).toLocaleString("en-US", {
-      maximumFractionDigits: 2,
-    });
+    return parseFloat(value) >= 0.01
+      ? parseFloat(value).toLocaleString("en-US", {
+          maximumFractionDigits: 2,
+        })
+      : "< 0.01";
   } else return "0.00";
 };

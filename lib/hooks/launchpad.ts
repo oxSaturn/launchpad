@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useAccount, useNetwork, useBalance } from "wagmi";
 import { formatUnits } from "viem";
 import {
@@ -14,9 +15,15 @@ import {
   useFairAuctionTotalRaised,
 } from "../generated/wagmiGen";
 
+const SECOND = 1_000;
+const MINUTE = SECOND * 60;
+const HOUR = MINUTE * 60;
+const DAY = HOUR * 24;
+
 export const useTimeAndPrice = (saleTokenDecimals: number | undefined) => {
   const { data: totalRaised } = useFairAuctionTotalRaised({
     enabled: !!saleTokenDecimals,
+    watch: true,
   });
   const { data: hasStarted } = useFairAuctionHasStarted();
   const { data: hasEnded } = useFairAuctionHasEnded();
@@ -101,3 +108,26 @@ export const useProjectTokenData = () => {
     projectTokenDecimals,
   };
 };
+
+export function useTimer(_deadline: bigint | undefined, interval = SECOND) {
+  const deadline = _deadline ? Number(_deadline) : 0;
+  const [timeLeft, setTimeLeft] = useState(deadline * 1000);
+
+  useEffect(() => {
+    setTimeLeft(deadline * 1000);
+    const intervalId = setInterval(() => {
+      setTimeLeft(deadline * 1000);
+    }, interval);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [deadline, interval]);
+
+  return {
+    days: Math.floor(timeLeft / DAY),
+    hours: Math.floor((timeLeft / HOUR) % 24),
+    minutes: Math.floor((timeLeft / MINUTE) % 60),
+    seconds: Math.floor((timeLeft / SECOND) % 60),
+  };
+}
