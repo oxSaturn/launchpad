@@ -125,6 +125,15 @@ export function useTimer(_deadline: bigint | undefined, interval = SECOND) {
     };
   }, [deadline, interval]);
 
+  if (deadline === 0) {
+    return {
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+    };
+  }
+
   return {
     days: Math.floor(timeLeft / DAY),
     hours: Math.floor((timeLeft / HOUR) % 24),
