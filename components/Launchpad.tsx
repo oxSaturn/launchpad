@@ -240,22 +240,22 @@ export function Launchpad() {
               disabled={
                 isFetchingAllowance ||
                 isWaitingForTx ||
-                (needsApproval
-                  ? !approve || isApproving
-                  : hasEnded
+                (hasEnded
                   ? !claim || isClaiming
+                  : needsApproval
+                  ? !approve || isApproving
                   : !buy || isBuying)
               }
               onClick={
-                needsApproval
-                  ? () => approve?.()
-                  : hasEnded
+                hasEnded
                   ? () => claim?.()
+                  : needsApproval
+                  ? () => approve?.()
                   : () => buy?.()
               }
               className="flex h-14 w-full items-center justify-center rounded border border-transparent bg-primary p-5 text-center font-medium text-extendedBlack transition-colors hover:bg-secondary focus-visible:outline-secondary disabled:bg-slate-400 disabled:opacity-60"
             >
-              {needsApproval ? "Approve" : hasEnded ? "Claim" : "Buy"}
+              {hasEnded ? "Claim" : needsApproval ? "Approve" : "Buy"}
             </button>
           </div>
           <div>graph</div>
