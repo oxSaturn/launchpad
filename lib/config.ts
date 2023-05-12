@@ -4,5 +4,5 @@ export const fairAuctionContractAddresses = {
   [arbitrum.id]: "0x0b776552c1aef1dc33005dd25acda22493b6615d", // TODO placeholders
   [arbitrumGoerli.id]: "0x0b776552c1aef1dc33005dd25acda22493b6615d",
   [canto.id]: "0x0b776552c1aef1dc33005dd25acda22493b6615d",
-  [goerli.id]: "0xF56684DF617ef6f76C62a3608c115950eFc3F6d1", // motto contract
+  [goerli.id]: "0x13661E41f6AFF14DE677bbD692601bE809a14F76", // use epoch time not block
 } as const;
