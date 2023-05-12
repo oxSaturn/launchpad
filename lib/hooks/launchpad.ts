@@ -20,7 +20,10 @@ const MINUTE = SECOND * 60;
 const HOUR = MINUTE * 60;
 const DAY = HOUR * 24;
 
-export const useTimeAndPrice = (saleTokenDecimals: number | undefined) => {
+export const useTimeAndPrice = (
+  saleTokenDecimals: number | undefined,
+  projectTokenDecimals: number | undefined
+) => {
   const { data: totalRaised } = useFairAuctionTotalRaised({
     enabled: !!saleTokenDecimals,
     watch: true,
@@ -39,7 +42,8 @@ export const useTimeAndPrice = (saleTokenDecimals: number | undefined) => {
     !tokensToDistribute ||
     !minSaleTokensToRaise ||
     !maxRaiseAmount ||
-    !saleTokenDecimals
+    !saleTokenDecimals ||
+    !projectTokenDecimals
   ) {
     return {
       hasEnded,
@@ -49,18 +53,26 @@ export const useTimeAndPrice = (saleTokenDecimals: number | undefined) => {
     };
   }
 
+  const minRaise = formatUnits(minSaleTokensToRaise, saleTokenDecimals);
+  const maxRaise = formatUnits(maxRaiseAmount, saleTokenDecimals);
+  const totalRaiseFormatted = formatUnits(totalRaised, saleTokenDecimals);
+  const tokensToDistributeFormatted = formatUnits(
+    tokensToDistribute,
+    projectTokenDecimals
+  );
+
   const tokenPrice =
     totalRaised <= minSaleTokensToRaise
-      ? minSaleTokensToRaise / tokensToDistribute
-      : totalRaised / tokensToDistribute;
+      ? Number(minRaise) / Number(tokensToDistributeFormatted)
+      : Number(totalRaiseFormatted) / Number(tokensToDistributeFormatted);
 
   return {
     hasEnded,
     hasStarted,
     remainingTime,
-    tokenPrice: formatUnits(tokenPrice, saleTokenDecimals),
-    minRaise: formatUnits(minSaleTokensToRaise, saleTokenDecimals),
-    maxRaise: formatUnits(maxRaiseAmount, saleTokenDecimals),
+    tokenPrice,
+    minRaise,
+    maxRaise,
   };
 };
 

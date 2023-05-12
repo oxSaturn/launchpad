@@ -101,7 +101,7 @@ export function Launchpad() {
     tokenPrice,
     maxRaise,
     minRaise,
-  } = useTimeAndPrice(saleTokenDecimals);
+  } = useTimeAndPrice(saleTokenDecimals, projectTokenDecimals);
   const { days, hours, minutes } = useTimer(remainingTime, MINUTE);
 
   const { config: approveConfig } = usePrepareErc20Approve({
@@ -216,7 +216,8 @@ export function Launchpad() {
               {projectTokenSymbol ?? "DMT"} price
             </div>
             <div className="font-siebB">
-              {formatCurrency(tokenPrice)} {saleTokenSymbol ?? "USDC"}
+              {formatCurrency(tokenPrice?.toString())}{" "}
+              {saleTokenSymbol ?? "USDC"}
             </div>
           </div>
           <div className="flex flex-col gap-1">
