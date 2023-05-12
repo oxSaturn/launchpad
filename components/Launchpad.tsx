@@ -108,11 +108,7 @@ export function Launchpad() {
         : 0n,
     ],
   });
-  const {
-    write: approve,
-    isLoading: isApproving,
-    data: approveTx,
-  } = useErc20Approve({
+  const { write: approve, isLoading: isApproving } = useErc20Approve({
     ...approveConfig,
     onSuccess(data) {
       setToastOpen(true);
@@ -168,18 +164,12 @@ export function Launchpad() {
     },
   });
 
-  useWaitForTransaction({
-    hash: approveTx?.hash,
-    onSuccess: () => {
-      refetchAllowance();
-    },
-  });
-
   const { isFetching: isWaitingForTx } = useWaitForTransaction({
     hash: toastHash,
     onSuccess: () => {
       setToastHash(undefined);
       setToastMessage("");
+      refetchAllowance();
     },
   });
 
