@@ -59,6 +59,8 @@ export const useTimeAndPrice = (saleTokenDecimals: number | undefined) => {
     hasStarted,
     remainingTime,
     tokenPrice: formatUnits(tokenPrice, saleTokenDecimals),
+    minRaise: formatUnits(minSaleTokensToRaise, saleTokenDecimals),
+    maxRaise: formatUnits(maxRaiseAmount, saleTokenDecimals),
   };
 };
 

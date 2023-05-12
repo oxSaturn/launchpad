@@ -94,8 +94,14 @@ export function Launchpad() {
       select: (data) => formatUnits(data, projectTokenDecimals!),
     });
 
-  const { hasEnded, hasStarted, remainingTime, tokenPrice } =
-    useTimeAndPrice(saleTokenDecimals);
+  const {
+    hasEnded,
+    hasStarted,
+    remainingTime,
+    tokenPrice,
+    maxRaise,
+    minRaise,
+  } = useTimeAndPrice(saleTokenDecimals);
   const { days, hours, minutes } = useTimer(remainingTime, MINUTE);
 
   const { config: approveConfig } = usePrepareErc20Approve({
@@ -119,7 +125,7 @@ export function Launchpad() {
     ...approveConfig,
     onSuccess(data) {
       setToastOpen(true);
-      setToastMessage("Approval successful submitted");
+      setToastMessage("Approval successfully submitted");
       setToastHash(data.hash);
       addRecentTransaction({
         hash: data.hash,
@@ -146,7 +152,7 @@ export function Launchpad() {
     ...buyConfig,
     onSuccess(data) {
       setToastOpen(true);
-      setToastMessage("Buy successful submitted");
+      setToastMessage("Buy successfully submitted");
       setToastHash(data.hash);
       addRecentTransaction({
         hash: data.hash,
@@ -162,7 +168,7 @@ export function Launchpad() {
     ...claimConfig,
     onSuccess(data) {
       setToastOpen(true);
-      setToastMessage("Claim successful submitted");
+      setToastMessage("Claim successfully submitted");
       setToastHash(data.hash);
       addRecentTransaction({
         hash: data.hash,
@@ -221,6 +227,18 @@ export function Launchpad() {
           <div className="flex flex-col gap-1">
             <div>Remaining time</div>
             <div className="font-siebB">{`${days}d ${hours}h ${minutes}m`}</div>
+          </div>
+          <div className="flex flex-col gap-1">
+            <div>Min raise</div>
+            <div className="font-siebB">
+              {formatCurrency(minRaise)} {saleTokenSymbol}
+            </div>
+          </div>
+          <div className="flex flex-col gap-1">
+            <div>Max raise</div>
+            <div className="font-siebB">
+              {formatCurrency(maxRaise)} {saleTokenSymbol}
+            </div>
           </div>
         </div>
         <div className="flex w-full flex-col-reverse items-center justify-between lg:flex-row ">
