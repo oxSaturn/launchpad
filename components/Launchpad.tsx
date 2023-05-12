@@ -44,15 +44,18 @@ export function Launchpad() {
   } = useSaleTokenData();
   const { projectTokenSymbol, projectTokenDecimals } = useProjectTokenData();
 
-  const { data: allowance, isFetching: isFetchingAllowance } =
-    useErc20Allowance({
-      address: saleTokenAddress,
-      args: [
-        address!,
-        fairAuctionContractAddresses[chain?.id as 7700 | 42161 | 421613 | 5],
-      ],
-      enabled: !!address && !chain?.unsupported,
-    });
+  const {
+    data: allowance,
+    isFetching: isFetchingAllowance,
+    refetch: refetchAllowance,
+  } = useErc20Allowance({
+    address: saleTokenAddress,
+    args: [
+      address!,
+      fairAuctionContractAddresses[chain?.id as 7700 | 42161 | 421613 | 5],
+    ],
+    enabled: !!address && !chain?.unsupported,
+  });
   const needsApproval = !isEnoughAllowance(
     allowance,
     saleTokenDecimals,
@@ -95,10 +98,10 @@ export function Launchpad() {
       parseUnits(amount as `${number}`, saleTokenDecimals!),
     ],
     enabled:
+      isValidInput(amount) &&
       !!address &&
       !chain?.unsupported &&
       !!saleTokenDecimals &&
-      isValidInput(amount) &&
       needsApproval &&
       hasStarted &&
       !hasEnded,
@@ -159,6 +162,7 @@ export function Launchpad() {
     onSuccess: () => {
       setToastHash(undefined);
       setToastMessage("");
+      refetchAllowance();
     },
   });
 
@@ -318,6 +322,7 @@ const isEnoughAllowance = (
   amount: `${number}`
 ) => {
   if (!allowance || !decimals) return false;
+  if (!isValidInput(amount)) return false;
   const readableAllowance = formatUnits(allowance, decimals);
   return +readableAllowance >= +amount;
 };
