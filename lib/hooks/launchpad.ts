@@ -129,7 +129,7 @@ export function useTimer(_deadline: bigint | undefined, interval = SECOND) {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setTimeLeft((prev) => prev - SECOND);
+      setTimeLeft((prev) => prev - interval);
     }, interval);
 
     return () => {
