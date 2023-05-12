@@ -1,13 +1,8 @@
 import { useAccount, useNetwork, useBalance } from "wagmi";
 import { formatUnits } from "viem";
 import {
-  useErc20Allowance,
-  useErc20Approve,
   useErc20Decimals,
   useErc20Symbol,
-  useFairAuctionBuy,
-  useFairAuctionClaim,
-  useFairAuctionGetExpectedClaimAmount,
   useFairAuctionGetRemainingTime,
   useFairAuctionHasEnded,
   useFairAuctionHasStarted,
@@ -17,10 +12,6 @@ import {
   useFairAuctionProjectToken,
   useFairAuctionSaleToken,
   useFairAuctionTotalRaised,
-  useFairAuctionUserInfo,
-  usePrepareErc20Approve,
-  usePrepareFairAuctionBuy,
-  usePrepareFairAuctionClaim,
 } from "../generated/wagmiGen";
 
 export const useTimeAndPrice = (saleTokenDecimals: number | undefined) => {
