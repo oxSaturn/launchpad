@@ -49,7 +49,7 @@ export function Launchpad() {
       address: saleTokenAddress,
       args: [
         address!,
-        fairAuctionContractAddresses[chain?.id as 7700 | 42161 | 421613],
+        fairAuctionContractAddresses[chain?.id as 7700 | 42161 | 421613 | 5],
       ],
       enabled: !!address && !chain?.unsupported,
     });
@@ -91,7 +91,7 @@ export function Launchpad() {
   const { config: approveConfig } = usePrepareErc20Approve({
     address: saleTokenAddress,
     args: [
-      fairAuctionContractAddresses[chain?.id as 7700 | 42161 | 421613],
+      fairAuctionContractAddresses[chain?.id as 7700 | 42161 | 421613 | 5],
       parseUnits(amount as `${number}`, saleTokenDecimals!),
     ],
     enabled:
