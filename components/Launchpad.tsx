@@ -231,6 +231,7 @@ export function Launchpad() {
             <div className="relative">
               <input
                 // disabled={!hasStarted || hasEnded}
+                value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 className={`w-full rounded border-none bg-transparent p-4 text-left text-base outline outline-1 outline-primary ${
                   !isValidInput(amount) && amount !== ""
