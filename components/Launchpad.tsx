@@ -94,8 +94,14 @@ export function Launchpad() {
       select: (data) => formatUnits(data, projectTokenDecimals!),
     });
 
-  const { hasEnded, hasStarted, remainingTime, tokenPrice } =
-    useTimeAndPrice(saleTokenDecimals);
+  const {
+    hasEnded,
+    hasStarted,
+    remainingTime,
+    tokenPrice,
+    maxRaise,
+    minRaise,
+  } = useTimeAndPrice(saleTokenDecimals);
   const { days, hours, minutes } = useTimer(remainingTime, MINUTE);
 
   const { config: approveConfig } = usePrepareErc20Approve({
@@ -119,7 +125,7 @@ export function Launchpad() {
     ...approveConfig,
     onSuccess(data) {
       setToastOpen(true);
-      setToastMessage("Approval successful submitted");
+      setToastMessage("Approval successfully submitted");
       setToastHash(data.hash);
       addRecentTransaction({
         hash: data.hash,
@@ -140,13 +146,14 @@ export function Launchpad() {
       !chain?.unsupported &&
       isValidInput(amount) &&
       hasStarted &&
-      !hasEnded,
+      !hasEnded &&
+      !!allowance,
   });
   const { write: buy, isLoading: isBuying } = useFairAuctionBuy({
     ...buyConfig,
     onSuccess(data) {
       setToastOpen(true);
-      setToastMessage("Buy successful submitted");
+      setToastMessage("Buy successfully submitted");
       setToastHash(data.hash);
       addRecentTransaction({
         hash: data.hash,
@@ -162,7 +169,7 @@ export function Launchpad() {
     ...claimConfig,
     onSuccess(data) {
       setToastOpen(true);
-      setToastMessage("Claim successful submitted");
+      setToastMessage("Claim successfully submitted");
       setToastHash(data.hash);
       addRecentTransaction({
         hash: data.hash,
@@ -222,6 +229,18 @@ export function Launchpad() {
             <div>Remaining time</div>
             <div className="font-siebB">{`${days}d ${hours}h ${minutes}m`}</div>
           </div>
+          <div className="flex flex-col gap-1">
+            <div>Min raise</div>
+            <div className="font-siebB">
+              {formatCurrency(minRaise)} {saleTokenSymbol}
+            </div>
+          </div>
+          <div className="flex flex-col gap-1">
+            <div>Max raise</div>
+            <div className="font-siebB">
+              {formatCurrency(maxRaise)} {saleTokenSymbol}
+            </div>
+          </div>
         </div>
         <div className="flex w-full flex-col-reverse items-center justify-between lg:flex-row ">
           <div className="flex flex-grow-[0.3] flex-col gap-2">
@@ -280,10 +299,16 @@ export function Launchpad() {
               }
               className="flex h-14 w-full items-center justify-center rounded border border-transparent bg-primary p-5 text-center font-medium text-extendedBlack transition-colors hover:bg-secondary focus-visible:outline-secondary disabled:bg-slate-400 disabled:opacity-60"
             >
-              {hasEnded ? "Claim" : needsApproval ? "Approve" : "Buy"}
+              {isWaitingForTx
+                ? "Loading..."
+                : hasEnded
+                ? "Claim"
+                : needsApproval
+                ? "Approve"
+                : "Buy"}
             </button>
           </div>
-          <div>
+          <div className="flex-grow-[0.3]">
             <video
               src="/dmtcoin.webm"
               className="max-w-[112px]"

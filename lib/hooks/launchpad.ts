@@ -59,6 +59,8 @@ export const useTimeAndPrice = (saleTokenDecimals: number | undefined) => {
     hasStarted,
     remainingTime,
     tokenPrice: formatUnits(tokenPrice, saleTokenDecimals),
+    minRaise: formatUnits(minSaleTokensToRaise, saleTokenDecimals),
+    maxRaise: formatUnits(maxRaiseAmount, saleTokenDecimals),
   };
 };
 
@@ -114,15 +116,23 @@ export function useTimer(_deadline: bigint | undefined, interval = SECOND) {
   const [timeLeft, setTimeLeft] = useState(deadline * 1000);
 
   useEffect(() => {
-    setTimeLeft(deadline * 1000);
     const intervalId = setInterval(() => {
-      setTimeLeft(deadline * 1000);
+      setTimeLeft((prev) => prev - SECOND);
     }, interval);
 
     return () => {
       clearInterval(intervalId);
     };
   }, [deadline, interval]);
+
+  if (deadline === 0) {
+    return {
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+    };
+  }
 
   return {
     days: Math.floor(timeLeft / DAY),
