@@ -81,7 +81,6 @@ export function Launchpad() {
     args: [address!],
     select([allocation, contribution]) {
       return {
-        allocation: formatUnits(allocation, projectTokenDecimals!),
         spent: formatUnits(contribution, saleTokenDecimals!),
       };
     },
@@ -221,12 +220,6 @@ export function Launchpad() {
             </div>
           </div>
           <div className="flex flex-col gap-1">
-            <div>Expected claim</div>
-            <div className="font-siebB">
-              {formatCurrency(expectedClaimAmount)}
-            </div>
-          </div>
-          <div className="flex flex-col gap-1">
             <div>Remaining time</div>
             <div className="font-siebB">{`${days}d ${hours}h ${minutes}m`}</div>
           </div>
@@ -277,7 +270,7 @@ export function Launchpad() {
             <div className="flex items-center justify-between">
               <div>Allocation</div>
               <div>
-                {formatCurrency(userInfo?.allocation)}{" "}
+                {formatCurrency(expectedClaimAmount)}{" "}
                 {projectTokenSymbol ?? "DMT"}
               </div>
             </div>
