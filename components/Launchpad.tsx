@@ -190,7 +190,7 @@ export function Launchpad() {
   };
   return (
     <>
-      <div className="flex min-w-[1024px] flex-col gap-3">
+      <div className="flex flex-col gap-3 sm:flex-row lg:min-w-[1024px] lg:flex-col">
         <Image
           alt="DMT"
           src="/dmt.png"
@@ -198,7 +198,7 @@ export function Launchpad() {
           height={62.5}
           layout="fixed"
         />
-        <div className="mb-4 flex w-full items-center justify-between">
+        <div className="justify-betweens mb-4 flex w-full flex-col items-start gap-5 lg:flex-row lg:items-center">
           <div className="flex flex-col gap-1">
             <div>Total raised</div>
             <div className="font-siebB">
@@ -226,7 +226,7 @@ export function Launchpad() {
             </div>
           </div>
         </div>
-        <div className="flex w-full flex-wrap items-center justify-between">
+        <div className="flex w-full flex-col-reverse items-center justify-between lg:flex-row ">
           <div className="flex flex-grow-[0.3] flex-col gap-2">
             <div className="relative">
               <input

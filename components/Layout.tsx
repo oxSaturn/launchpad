@@ -9,7 +9,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <ConnectButton accountStatus="address" chainStatus="icon" />
       </header>
       <main className="flex-grow">{children}</main>
-      <footer className="flex w-full items-center justify-between px-4 py-5 md:px-20">
+      <footer className="flex w-full flex-col-reverse items-center justify-between px-4 py-5 sm:flex-row md:px-20">
         <div className="flex gap-4 text-secondary">
           <a
             href="https://velocimeter.xyz"
