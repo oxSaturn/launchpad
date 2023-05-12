@@ -146,7 +146,8 @@ export function Launchpad() {
       !chain?.unsupported &&
       isValidInput(amount) &&
       hasStarted &&
-      !hasEnded,
+      !hasEnded &&
+      !!allowance,
   });
   const { write: buy, isLoading: isBuying } = useFairAuctionBuy({
     ...buyConfig,
