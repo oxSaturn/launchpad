@@ -308,7 +308,7 @@ export function Launchpad() {
                 : "Buy"}
             </button>
           </div>
-          <div>
+          <div className="flex-grow-[0.3]">
             <video
               src="/dmtcoin.webm"
               className="max-w-[112px]"
