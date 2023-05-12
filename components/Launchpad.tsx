@@ -299,7 +299,13 @@ export function Launchpad() {
               }
               className="flex h-14 w-full items-center justify-center rounded border border-transparent bg-primary p-5 text-center font-medium text-extendedBlack transition-colors hover:bg-secondary focus-visible:outline-secondary disabled:bg-slate-400 disabled:opacity-60"
             >
-              {hasEnded ? "Claim" : needsApproval ? "Approve" : "Buy"}
+              {isWaitingForTx
+                ? "Loading..."
+                : hasEnded
+                ? "Claim"
+                : needsApproval
+                ? "Approve"
+                : "Buy"}
             </button>
           </div>
           <div>
