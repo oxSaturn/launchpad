@@ -93,10 +93,6 @@ export function Launchpad() {
 
   const { config: approveConfig } = usePrepareErc20Approve({
     address: saleTokenAddress,
-    args: [
-      fairAuctionContractAddresses[chain?.id as 7700 | 42161 | 421613 | 5],
-      parseUnits(amount as `${number}`, saleTokenDecimals!),
-    ],
     enabled:
       isValidInput(amount) &&
       !!address &&
@@ -105,8 +101,18 @@ export function Launchpad() {
       needsApproval &&
       hasStarted &&
       !hasEnded,
+    args: [
+      fairAuctionContractAddresses[chain?.id as 7700 | 42161 | 421613 | 5],
+      isValidInput(amount)
+        ? parseUnits(amount as `${number}`, saleTokenDecimals!)
+        : 0n,
+    ],
   });
-  const { write: approve, isLoading: isApproving } = useErc20Approve({
+  const {
+    write: approve,
+    isLoading: isApproving,
+    data: approveTx,
+  } = useErc20Approve({
     ...approveConfig,
     onSuccess(data) {
       setToastOpen(true);
@@ -120,7 +126,12 @@ export function Launchpad() {
   });
 
   const { config: buyConfig } = usePrepareFairAuctionBuy({
-    args: [parseUnits(amount as `${number}`, saleTokenDecimals!), zeroAddress],
+    args: [
+      isValidInput(amount)
+        ? parseUnits(amount as `${number}`, saleTokenDecimals!)
+        : 0n,
+      zeroAddress,
+    ],
     enabled:
       !!address &&
       !chain?.unsupported &&
@@ -157,12 +168,18 @@ export function Launchpad() {
     },
   });
 
+  useWaitForTransaction({
+    hash: approveTx?.hash,
+    onSuccess: () => {
+      refetchAllowance();
+    },
+  });
+
   const { isFetching: isWaitingForTx } = useWaitForTransaction({
     hash: toastHash,
     onSuccess: () => {
       setToastHash(undefined);
       setToastMessage("");
-      refetchAllowance();
     },
   });
 
@@ -207,7 +224,7 @@ export function Launchpad() {
           <div className="flex flex-grow-[0.3] flex-col gap-2">
             <div className="relative">
               <input
-                disabled={!hasStarted || hasEnded}
+                // disabled={!hasStarted || hasEnded}
                 onChange={(e) => setAmount(e.target.value)}
                 className={`w-full rounded border-none bg-transparent p-4 text-left text-base outline outline-1 outline-primary ${
                   !isValidInput(amount) && amount !== ""
