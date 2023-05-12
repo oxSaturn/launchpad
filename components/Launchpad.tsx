@@ -203,7 +203,7 @@ export function Launchpad() {
           height={62.5}
           layout="fixed"
         />
-        <div className="justify-betweens mb-4 flex w-full flex-col items-start gap-5 lg:flex-row lg:items-center">
+        <div className="mb-4 flex w-full flex-col items-start justify-between lg:flex-row lg:items-center">
           <div className="flex flex-col gap-1">
             <div>Total raised</div>
             <div className="font-siebB">
@@ -370,10 +370,25 @@ const isEnoughAllowance = (
 const formatCurrency = (value: string | undefined) => {
   if (!value) return "0.00";
   if (isValidInput(value)) {
-    return parseFloat(value) >= 0.01
-      ? parseFloat(value).toLocaleString("en-US", {
+    const valueNumber = parseFloat(value);
+    if (valueNumber < 0.01) {
+      return "< 0.01";
+    } else if (valueNumber > 100_000 && valueNumber < 1_000_000) {
+      return (
+        (valueNumber / 1_000).toLocaleString("en-US", {
           maximumFractionDigits: 2,
-        })
-      : "< 0.01";
+        }) + "k"
+      );
+    } else if (valueNumber > 1_000_000) {
+      return (
+        (valueNumber / 1_000_000).toLocaleString("en-US", {
+          maximumFractionDigits: 2,
+        }) + "m"
+      );
+    } else {
+      return valueNumber.toLocaleString("en-US", {
+        maximumFractionDigits: 2,
+      });
+    }
   } else return "0.00";
 };
