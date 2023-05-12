@@ -219,6 +219,12 @@ export function Launchpad() {
               {formatCurrency(expectedClaimAmount)}
             </div>
           </div>
+          <div className="flex flex-col gap-1">
+            <div>Status</div>
+            <div className="font-siebB">
+              {!hasStarted ? "Not started" : !hasEnded ? "In process" : "Ended"}
+            </div>
+          </div>
         </div>
         <div className="flex w-full flex-wrap items-center justify-between">
           <div className="flex flex-grow-[0.3] flex-col gap-2">
