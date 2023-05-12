@@ -181,7 +181,7 @@ export function Launchpad() {
           <div className="flex flex-col gap-1">
             <div>Total raised</div>
             <div className="font-siebB">
-              {formatCurrency(totalRaised)} {saleTokenSymbol ?? "ETH"}
+              {formatCurrency(totalRaised)} {saleTokenSymbol ?? "USDC"}
             </div>
           </div>
           <div className="flex flex-col gap-1">
@@ -189,7 +189,7 @@ export function Launchpad() {
               {projectTokenSymbol ?? "DMT"} price
             </div>
             <div className="font-siebB">
-              {formatCurrency(tokenPrice)} {saleTokenSymbol ?? "ETH"}
+              {formatCurrency(tokenPrice)} {saleTokenSymbol ?? "USDC"}
             </div>
           </div>
           <div className="flex flex-col gap-1">
@@ -210,7 +210,7 @@ export function Launchpad() {
                     ? "text-error focus:outline-error focus-visible:outline-error"
                     : "focus:outline-secondary focus-visible:outline-secondary"
                 }`}
-                placeholder={`0.00 ${saleTokenSymbol ?? "ETH"}`}
+                placeholder={`0.00 ${saleTokenSymbol ?? "USDC"}`}
               />
               <button
                 className="absolute right-3 top-1 text-xs text-secondary"
@@ -220,13 +220,13 @@ export function Launchpad() {
               </button>
               <div className="absolute bottom-1 right-3 text-xs text-secondary">
                 Balance: {formatCurrency(saleTokenBalance?.formatted)}{" "}
-                {saleTokenSymbol ?? "ETH"}
+                {saleTokenSymbol ?? "USDC"}
               </div>
             </div>
             <div className="flex items-center justify-between">
               <div>Spent</div>
               <div>
-                {formatCurrency(userInfo?.spent)} {saleTokenSymbol ?? "ETH"}
+                {formatCurrency(userInfo?.spent)} {saleTokenSymbol ?? "USDC"}
               </div>
             </div>
             <div className="flex items-center justify-between">
