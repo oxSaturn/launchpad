@@ -79,9 +79,10 @@ export function Launchpad() {
       !!projectTokenDecimals &&
       !!saleTokenDecimals,
     args: [address!],
-    select([allocation, contribution]) {
+    select([, contribution, , , , , , hasClaimed]) {
       return {
         spent: formatUnits(contribution, saleTokenDecimals!),
+        hasClaimed,
       };
     },
   });
@@ -278,6 +279,7 @@ export function Launchpad() {
               disabled={
                 isFetchingAllowance ||
                 isWaitingForTx ||
+                userInfo?.hasClaimed ||
                 (hasEnded
                   ? !claim || isClaiming
                   : needsApproval
