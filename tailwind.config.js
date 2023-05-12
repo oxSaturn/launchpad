@@ -11,12 +11,10 @@ module.exports = {
     hoverOnlyWhenSupported: true,
   },
   theme: {
-    fontFamily: {
-      sans: ["SIEBRG", ...defaultTheme.fontFamily.sans],
-    },
     extend: {
       fontFamily: {
         siebB: ["SIEBB", ...defaultTheme.fontFamily.sans],
+        siebRG: ["SIEBRG", ...defaultTheme.fontFamily.sans],
       },
       colors: {
         primary: "#2ebe2b",

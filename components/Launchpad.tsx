@@ -258,7 +258,15 @@ export function Launchpad() {
               {hasEnded ? "Claim" : needsApproval ? "Approve" : "Buy"}
             </button>
           </div>
-          <div>graph</div>
+          <div>
+            <video
+              src="/dmtcoin.webm"
+              className="max-w-[112px]"
+              autoPlay
+              muted
+              loop
+            />
+          </div>
         </div>
       </div>
       <Toast.Root
