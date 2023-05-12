@@ -114,9 +114,8 @@ export function useTimer(_deadline: bigint | undefined, interval = SECOND) {
   const [timeLeft, setTimeLeft] = useState(deadline * 1000);
 
   useEffect(() => {
-    setTimeLeft(deadline * 1000);
     const intervalId = setInterval(() => {
-      setTimeLeft(deadline * 1000);
+      setTimeLeft((prev) => prev - SECOND);
     }, interval);
 
     return () => {
