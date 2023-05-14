@@ -12,7 +12,7 @@ const Home: NextPage = () => {
           src="/sanko.png"
           width={960}
           height={375}
-          layout="fixed"
+          layout="intrinsic"
         />
       </div>
       <Launchpad />

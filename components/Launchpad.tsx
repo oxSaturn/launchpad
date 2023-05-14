@@ -25,9 +25,6 @@ import {
   useTimer,
 } from "../lib/hooks/launchpad";
 
-const SECOND = 1_000;
-const MINUTE = SECOND * 60;
-
 export function Launchpad() {
   const [toastOpen, setToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
@@ -102,7 +99,7 @@ export function Launchpad() {
     maxRaise,
     minRaise,
   } = useTimeAndPrice(saleTokenDecimals, projectTokenDecimals);
-  const { days, hours, minutes } = useTimer(remainingTime, MINUTE);
+  const { days, hours, minutes } = useTimer(remainingTime);
 
   const { config: approveConfig } = usePrepareErc20Approve({
     address: saleTokenAddress,

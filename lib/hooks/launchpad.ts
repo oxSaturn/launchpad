@@ -123,33 +123,31 @@ export const useProjectTokenData = () => {
   };
 };
 
-export function useTimer(_deadline: bigint | undefined, interval = SECOND) {
+export function useTimer(_deadline: bigint | undefined) {
   const deadline = _deadline ? Number(_deadline) : 0;
   const [timeLeft, setTimeLeft] = useState(deadline * 1000);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setTimeLeft((prev) => prev - interval);
-    }, interval);
+      setTimeLeft((prev) => prev - MINUTE);
+    }, MINUTE);
 
     return () => {
       clearInterval(intervalId);
     };
-  }, [deadline, interval]);
+  }, [deadline]);
 
-  if (deadline === 0) {
-    return {
-      days: 0,
-      hours: 0,
-      minutes: 0,
-      seconds: 0,
-    };
-  }
-
-  return {
-    days: Math.floor(timeLeft / DAY),
-    hours: Math.floor((timeLeft / HOUR) % 24),
-    minutes: Math.floor((timeLeft / MINUTE) % 60),
-    seconds: Math.floor((timeLeft / SECOND) % 60),
-  };
+  return timeLeft > 0
+    ? {
+        days: Math.floor(timeLeft / DAY),
+        hours: Math.floor((timeLeft / HOUR) % 24),
+        minutes: Math.floor((timeLeft / MINUTE) % 60),
+        seconds: Math.floor((timeLeft / SECOND) % 60),
+      }
+    : {
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+      };
 }
