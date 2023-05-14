@@ -197,14 +197,16 @@ export function Launchpad() {
   return (
     <>
       <div className="flex flex-col gap-3 sm:flex-row lg:min-w-[1024px] lg:flex-col">
-        <Image
-          alt="DMT"
-          src="/dmt.png"
-          width={160}
-          height={62.5}
-          layout="fixed"
-        />
-        <div className="mb-4 flex w-full flex-col items-start justify-between lg:flex-row lg:items-center">
+        <div className="self-center sm:self-auto">
+          <Image
+            alt="DMT"
+            src="/dmt.png"
+            width={160}
+            height={62.5}
+            layout="fixed"
+          />
+        </div>
+        <div className="mb-4 grid w-full grid-cols-2 flex-col items-start justify-between gap-4 text-sm sm:flex sm:text-base lg:flex-row lg:items-center">
           <div className="flex flex-col gap-1">
             <div>Total raised</div>
             <div className="font-siebB">
@@ -237,7 +239,7 @@ export function Launchpad() {
             </div>
           </div>
         </div>
-        <div className="flex w-full flex-col-reverse items-center justify-between lg:flex-row ">
+        <div className="flex w-full flex-col items-center justify-between gap-4 lg:flex-row">
           <div className="flex flex-grow-[0.3] flex-col gap-2">
             <div className="relative">
               <input
@@ -280,6 +282,7 @@ export function Launchpad() {
                 isFetchingAllowance ||
                 isWaitingForTx ||
                 userInfo?.hasClaimed ||
+                !allowance ||
                 (hasEnded
                   ? !claim || isClaiming
                   : allowance?.needsApproval
