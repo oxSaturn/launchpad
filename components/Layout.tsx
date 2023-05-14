@@ -19,14 +19,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
           >
             velocimeter
           </a>
-          <a
-            href="https://sankodreammachine.net/airdrop"
-            target="_blank"
-            rel="noreferrer noopener"
-            className="transition-colors hover:text-primary"
-          >
-            airdrop
-          </a>
         </div>
         <div className="text-2xl">Sanko Game Corp</div>
         <div className="flex gap-4">

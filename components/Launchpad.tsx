@@ -194,10 +194,13 @@ export function Launchpad() {
       setAmount(saleTokenBalance.formatted);
     }
   };
+  const onAirdropClick = () => {
+    window.open("https://sankodreammachine.net/airdrop", "_blank");
+  };
   return (
     <>
       <div className="flex flex-col gap-3 sm:flex-row lg:min-w-[1024px] lg:flex-col">
-        <div className="self-center sm:self-auto">
+        <div className="flex w-full flex-col items-center justify-between self-center sm:self-auto lg:flex-row">
           <Image
             alt="DMT"
             src="/dmt.png"
@@ -205,6 +208,12 @@ export function Launchpad() {
             height={62.5}
             layout="fixed"
           />
+          <button
+            onClick={onAirdropClick}
+            className="max-w-[215.5px] rounded border border-primary px-16 py-4 transition-shadow hover:shadow hover:shadow-secondary"
+          >
+            AIRDROP
+          </button>
         </div>
         <div className="mb-4 grid w-full grid-cols-2 flex-col items-start justify-between gap-4 text-sm sm:flex sm:text-base lg:flex-row lg:items-center">
           <div className="flex flex-col gap-1">
