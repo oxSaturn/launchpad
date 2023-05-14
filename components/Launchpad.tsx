@@ -56,12 +56,15 @@ export function Launchpad() {
       fairAuctionContractAddresses[chain?.id as 7700 | 42161 | 421613 | 5],
     ],
     enabled: !!address && !chain?.unsupported,
+    select: (allowanceValue) => ({
+      value: allowanceValue,
+      needsApproval: !isEnoughAllowance(
+        allowanceValue,
+        saleTokenDecimals,
+        amount as `${number}`
+      ),
+    }),
   });
-  const needsApproval = !isEnoughAllowance(
-    allowance,
-    saleTokenDecimals,
-    amount as `${number}`
-  );
 
   const { data: totalRaised } = useFairAuctionTotalRaised({
     enabled: !chain?.unsupported && !!saleTokenDecimals,
@@ -108,7 +111,7 @@ export function Launchpad() {
       !!address &&
       !chain?.unsupported &&
       !!saleTokenDecimals &&
-      needsApproval &&
+      allowance?.needsApproval &&
       hasStarted &&
       !hasEnded,
     args: [
@@ -279,14 +282,14 @@ export function Launchpad() {
                 userInfo?.hasClaimed ||
                 (hasEnded
                   ? !claim || isClaiming
-                  : needsApproval
+                  : allowance?.needsApproval
                   ? !approve || isApproving
                   : !buy || isBuying)
               }
               onClick={
                 hasEnded
                   ? () => claim?.()
-                  : needsApproval
+                  : allowance?.needsApproval
                   ? () => approve?.()
                   : () => buy?.()
               }
@@ -296,7 +299,7 @@ export function Launchpad() {
                 ? "Loading..."
                 : hasEnded
                 ? "Claim"
-                : needsApproval
+                : allowance?.needsApproval
                 ? "Approve"
                 : "Buy"}
             </button>
