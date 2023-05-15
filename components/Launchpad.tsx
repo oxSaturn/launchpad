@@ -201,7 +201,7 @@ export function Launchpad() {
   return (
     <>
       <div className="flex flex-col gap-3 sm:flex-row lg:min-w-[1024px] lg:flex-col">
-        <div className="flex w-full flex-col items-center justify-between self-center sm:self-auto lg:flex-row">
+        <div className="mb-4 flex w-full flex-col items-center justify-between self-center sm:mb-0 sm:self-auto lg:flex-row">
           <Image
             alt="DMT"
             src="/dmt.png"
