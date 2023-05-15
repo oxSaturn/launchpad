@@ -2,7 +2,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { useAccount, useNetwork, useWaitForTransaction } from "wagmi";
 import * as Toast from "@radix-ui/react-toast";
-import { formatUnits, parseEther, parseUnits, zeroAddress } from "viem";
+import { formatUnits, parseUnits, zeroAddress } from "viem";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 
 import {
