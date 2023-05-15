@@ -300,7 +300,7 @@ export function Launchpad() {
                   ? () => approve?.()
                   : () => buy?.()
               }
-              className="flex h-14 w-full items-center justify-center rounded border border-transparent bg-primary p-5 text-center font-medium text-extendedBlack transition-colors hover:bg-secondary focus-visible:outline-secondary disabled:bg-slate-400 disabled:opacity-60"
+              className="flex h-14 w-full items-center justify-center rounded border border-transparent bg-primary p-5 text-center font-medium uppercase text-extendedBlack transition-colors hover:bg-secondary focus-visible:outline-secondary disabled:bg-slate-400 disabled:opacity-60"
             >
               {isWaitingForTx
                 ? "Loading..."
@@ -308,7 +308,7 @@ export function Launchpad() {
                 ? "Claim"
                 : allowance?.needsApproval
                 ? "Approve"
-                : "Buy"}
+                : "Deposit"}
             </button>
           </div>
           <div className="flex flex-grow-[0.3] flex-col items-center gap-4">
