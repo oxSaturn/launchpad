@@ -209,12 +209,6 @@ export function Launchpad() {
             height={62.5}
             layout="fixed"
           />
-          <button
-            onClick={onAirdropClick}
-            className="max-w-[215.5px] rounded border border-primary px-16 py-4 transition-shadow hover:shadow hover:shadow-secondary"
-          >
-            AIRDROP
-          </button>
         </div>
         <div className="mb-4 grid w-full grid-cols-2 flex-col items-start justify-between gap-4 text-sm sm:flex sm:text-base lg:flex-row lg:items-center">
           <div className="flex flex-col gap-1">
@@ -250,7 +244,7 @@ export function Launchpad() {
           </div>
         </div>
         <div className="flex w-full flex-col items-center justify-between gap-4 lg:flex-row">
-          <div className="flex flex-grow-[0.3] flex-col gap-2">
+          <div className="flex w-full flex-grow-[0.3] flex-col gap-2 sm:w-auto">
             <div className="relative">
               <input
                 // disabled={!hasStarted || hasEnded}
@@ -317,7 +311,7 @@ export function Launchpad() {
                 : "Buy"}
             </button>
           </div>
-          <div className="flex-grow-[0.3]">
+          <div className="flex flex-grow-[0.3] flex-col items-center gap-4">
             <video
               src="/dmtcoin.webm"
               className="max-w-[112px]"
@@ -325,6 +319,12 @@ export function Launchpad() {
               muted
               loop
             />
+            <button
+              onClick={onAirdropClick}
+              className="max-w-[215.5px] rounded border border-primary px-16 py-2 transition-shadow hover:shadow hover:shadow-secondary sm:py-4"
+            >
+              AIRDROP
+            </button>
           </div>
         </div>
       </div>

@@ -9,7 +9,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <ConnectButton accountStatus="address" chainStatus="icon" />
       </header>
       <main className="flex-grow">{children}</main>
-      <footer className="flex w-full flex-col-reverse items-center justify-between px-4 py-5 sm:flex-row md:px-20">
+      <footer className="flex w-full grid-cols-3 flex-col-reverse items-center justify-between gap-1 px-4 py-5 sm:grid md:px-20">
         <div className="flex gap-4 text-secondary">
           <a
             href="https://velocimeter.xyz"
@@ -20,8 +20,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
             velocimeter
           </a>
         </div>
-        <div className="text-2xl">Sanko Game Corp</div>
-        <div className="flex gap-4">
+        <div className="justify-self-center text-2xl">Sanko Game Corp ©</div>
+        <div className="flex gap-4 justify-self-end">
           <a
             className="block border border-primary p-1 transition-colors duration-300 hover:bg-primary hover:text-extendedBlack"
             href="https://discord.gg/t25nQt5SgQ"
