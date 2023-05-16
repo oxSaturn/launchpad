@@ -1,6 +1,10 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
-import { DiscordLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
+import {
+  DiscordLogoIcon,
+  TwitterLogoIcon,
+  ReaderIcon,
+} from "@radix-ui/react-icons";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -20,8 +24,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
             velocimeter
           </a>
         </div>
-        <div className="justify-self-center text-2xl">Sanko Game Corp ©</div>
+        <div className="justify-self-center text-2xl">Sanko GameCorp ©</div>
         <div className="flex gap-4 justify-self-end">
+          <a
+            className="block border border-primary p-1 transition-colors duration-300 hover:bg-primary hover:text-extendedBlack"
+            href="https://arbiscan.io/" // TODO deployment chore
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            <ReaderIcon />
+          </a>
           <a
             className="block border border-primary p-1 transition-colors duration-300 hover:bg-primary hover:text-extendedBlack"
             href="https://discord.gg/t25nQt5SgQ"

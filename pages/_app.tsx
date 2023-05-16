@@ -7,11 +7,10 @@ import {
   darkTheme,
 } from "@rainbow-me/rainbowkit";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { arbitrum, canto, arbitrumGoerli, goerli } from "wagmi/chains";
+import { arbitrum, goerli } from "wagmi/chains";
 import * as Toast from "@radix-ui/react-toast";
 
 import { alchemyProvider } from "wagmi/providers/alchemy";
-import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 import { publicProvider } from "wagmi/providers/public";
 
 import { Layout } from "../components/Layout";
@@ -20,15 +19,9 @@ import "../styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
 
 const { chains, publicClient } = configureChains(
-  [arbitrum, canto, arbitrumGoerli, goerli],
+  [arbitrum, goerli], // TODO chore delete goerli
   [
     alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_ID! }),
-    jsonRpcProvider({
-      rpc: () => ({
-        http: "https://canto.dexvaults.com",
-        webSocket: "wss://canto.dexvaults.com",
-      }),
-    }),
     publicProvider(),
   ]
 );
@@ -63,8 +56,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         })}
       >
         <NextHead>
-          <title>Launchpad</title>
-          <meta property="og:title" content="Launchpad" />
+          <title>$DMT Launchpad</title>
+          <meta property="og:title" content="$DMT Launchpad" />
           <meta
             property="og:description"
             content="Velocimeter MultiChain Launchpad"
@@ -74,7 +67,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             name="keywords"
             content="dApp, web3, launchpad, velocimeter, canto, arbitrum, wagmi, dexvaults, sanko, sanko dream machine, SankoGameCorp"
           />
-          <link rel="icon" href="/images/logo-icon.png" />
+          <link rel="icon" href="/images/favicon.png" />
         </NextHead>
         {mounted && (
           <Toast.Provider swipeDirection="right">
