@@ -92,15 +92,9 @@ export function Launchpad() {
       select: (data) => formatUnits(data, projectTokenDecimals!),
     });
 
-  const {
-    hasEnded,
-    hasStarted,
-    remainingTime,
-    tokenPrice,
-    maxRaise,
-    minRaise,
-  } = useTimeAndPrice(saleTokenDecimals, projectTokenDecimals);
-  const { days, hours, minutes } = useTimer(remainingTime);
+  const { hasEnded, hasStarted, tokenPrice, maxRaise, minRaise } =
+    useTimeAndPrice(saleTokenDecimals, projectTokenDecimals);
+  const { days, hours, minutes } = useTimer();
 
   const { config: approveConfig } = usePrepareErc20Approve({
     address: saleTokenAddress,

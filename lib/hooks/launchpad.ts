@@ -30,7 +30,6 @@ export const useTimeAndPrice = (
   });
   const { data: hasStarted } = useFairAuctionHasStarted();
   const { data: hasEnded } = useFairAuctionHasEnded();
-  const { data: remainingTime } = useFairAuctionGetRemainingTime();
   const { data: tokensToDistribute } =
     useFairAuctionMaxProjectTokensToDistribute();
   const { data: minSaleTokensToRaise } =
@@ -48,7 +47,6 @@ export const useTimeAndPrice = (
     return {
       hasEnded,
       hasStarted,
-      remainingTime,
       tokenPrice: undefined,
     };
   }
@@ -69,7 +67,6 @@ export const useTimeAndPrice = (
   return {
     hasEnded,
     hasStarted,
-    remainingTime,
     tokenPrice,
     minRaise,
     maxRaise,
@@ -123,7 +120,9 @@ export const useProjectTokenData = () => {
   };
 };
 
-export function useTimer(_deadline: bigint | undefined) {
+export function useTimer() {
+  const { data: _deadline } = useFairAuctionGetRemainingTime();
+
   const deadline = _deadline ? Number(_deadline) : 0;
   const [timeLeft, setTimeLeft] = useState(deadline * 1000);
 
