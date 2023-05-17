@@ -67,8 +67,7 @@ export const useTimeAndPrice = (
   const reachedMaxRaise = totalRaised >= maxRaiseAmount;
 
   return {
-    hasEnded,
-    reachedMaxRaise,
+    hasEnded: hasEnded || reachedMaxRaise,
     hasStarted,
     tokenPrice,
     minRaise,
