@@ -113,7 +113,11 @@ export function Launchpad() {
         : 0n,
     ],
   });
-  const { write: approve, isLoading: isApproving } = useErc20Approve({
+  const {
+    write: approve,
+    isLoading: isApproving,
+    data: approveTx,
+  } = useErc20Approve({
     ...approveConfig,
     onSuccess(data) {
       setToastOpen(true);
@@ -123,6 +127,12 @@ export function Launchpad() {
         hash: data.hash,
         description: "Approval tx",
       });
+    },
+  });
+  const { isFetching: isWaitingForApproveTx } = useWaitForTransaction({
+    hash: approveTx?.hash,
+    onSuccess: () => {
+      refetchAllowance();
     },
   });
 
@@ -139,9 +149,14 @@ export function Launchpad() {
       isValidInput(amount) &&
       hasStarted &&
       !hasEnded &&
-      !!allowance,
+      allowance &&
+      !allowance.needsApproval,
   });
-  const { write: buy, isLoading: isBuying } = useFairAuctionBuy({
+  const {
+    write: buy,
+    isLoading: isBuying,
+    data: buyTx,
+  } = useFairAuctionBuy({
     ...buyConfig,
     onSuccess(data) {
       setToastOpen(true);
@@ -153,11 +168,23 @@ export function Launchpad() {
       });
     },
   });
+  const { isFetching: isWaitingForBuyTx } = useWaitForTransaction({
+    hash: buyTx?.hash,
+    onSuccess: () => {
+      refetchAllowance();
+      refetchUserInfo();
+      refetchClaimAmount();
+    },
+  });
 
   const { config: claimConfig } = usePrepareFairAuctionClaim({
     enabled: !!address && !chain?.unsupported && hasEnded,
   });
-  const { write: claim, isLoading: isClaiming } = useFairAuctionClaim({
+  const {
+    write: claim,
+    isLoading: isClaiming,
+    data: claimTx,
+  } = useFairAuctionClaim({
     ...claimConfig,
     onSuccess(data) {
       setToastOpen(true);
@@ -169,13 +196,9 @@ export function Launchpad() {
       });
     },
   });
-
-  const { isFetching: isWaitingForTx } = useWaitForTransaction({
-    hash: toastHash,
+  const { isFetching: isWaitingForClaimTx } = useWaitForTransaction({
+    hash: claimTx?.hash,
     onSuccess: () => {
-      setToastHash(undefined);
-      setToastMessage("");
-      refetchAllowance();
       refetchUserInfo();
       refetchClaimAmount();
     },
@@ -189,6 +212,9 @@ export function Launchpad() {
   const onAirdropClick = () => {
     window.open("https://sankodreammachine.net/airdrop", "_blank");
   };
+
+  const isWaitingForTx =
+    isWaitingForApproveTx || isWaitingForBuyTx || isWaitingForClaimTx;
   return (
     <>
       <div className="flex flex-col gap-3 sm:flex-row lg:min-w-[1024px] lg:flex-col">
@@ -238,7 +264,6 @@ export function Launchpad() {
           <div className="flex w-full flex-grow-[0.3] flex-col gap-2 sm:w-auto">
             <div className="relative">
               <input
-                // disabled={!hasStarted || hasEnded}
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 className={`w-full rounded border-none bg-transparent p-4 text-left text-base outline outline-1 outline-primary ${

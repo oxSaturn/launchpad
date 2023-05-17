@@ -18,7 +18,7 @@ import { Layout } from "../components/Layout";
 
 import "../styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
-
+// TODO chores
 const { chains, publicClient } = configureChains(
   [arbitrum],
   [
