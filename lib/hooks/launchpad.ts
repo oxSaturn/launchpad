@@ -38,7 +38,7 @@ export const useTimeAndPrice = (
   const { data: maxRaiseAmount } = useFairAuctionMaxRaise();
 
   if (
-    !totalRaised ||
+    totalRaised === undefined ||
     !tokensToDistribute ||
     !minSaleTokensToRaise ||
     !maxRaiseAmount ||
