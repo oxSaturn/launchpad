@@ -1,11 +1,6 @@
 import { useState } from "react";
 import Image from "next/image";
-import {
-  useAccount,
-  useContractWrite,
-  useNetwork,
-  useWaitForTransaction,
-} from "wagmi";
+import { useAccount, useNetwork, useWaitForTransaction } from "wagmi";
 import * as Toast from "@radix-ui/react-toast";
 import { formatUnits, parseUnits, zeroAddress } from "viem";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
@@ -30,7 +25,6 @@ import {
   useTimer,
 } from "../lib/hooks/launchpad";
 import { formatCurrency, isEnoughAllowance, isValidInput } from "../lib/utils";
-import { fairAuctionABI } from "../lib/abis/fairAuction";
 
 export function Launchpad() {
   const [toastOpen, setToastOpen] = useState(false);
@@ -98,9 +92,15 @@ export function Launchpad() {
       select: (data) => formatUnits(data, projectTokenDecimals!),
     });
 
-  const { hasEnded, hasStarted, tokenPrice, maxRaise, minRaise } =
-    useTimeAndPrice(saleTokenDecimals, projectTokenDecimals);
-  const { days, hours, minutes } = useTimer();
+  const {
+    hasEnded,
+    hasStarted,
+    remainingTime,
+    tokenPrice,
+    maxRaise,
+    minRaise,
+  } = useTimeAndPrice(saleTokenDecimals, projectTokenDecimals);
+  const { days, hours, minutes } = useTimer(remainingTime);
 
   const { config: approveConfig } = usePrepareErc20Approve({
     address: saleTokenAddress,
@@ -160,25 +160,11 @@ export function Launchpad() {
     },
   });
 
-  // const { config: claimConfig } = usePrepareFairAuctionClaim({
-  //   enabled: !!address && !chain?.unsupported && hasEnded,
-  // });
-  // const { write: claim, isLoading: isClaiming } = useFairAuctionClaim({
-  //   ...claimConfig,
-  //   onSuccess(data) {
-  //     setToastOpen(true);
-  //     setToastMessage("Claim successfully submitted");
-  //     setToastHash(data.hash);
-  //     addRecentTransaction({
-  //       hash: data.hash,
-  //       description: "Claim tx",
-  //     });
-  //   },
-  // });
-  const { write: claim, isLoading: isClaiming } = useContractWrite({
-    abi: fairAuctionABI,
-    address: fairAuctionContractAddresses[chain?.id as 42161],
-    functionName: "claim",
+  const { config: claimConfig } = usePrepareFairAuctionClaim({
+    enabled: !!address && !chain?.unsupported && hasEnded,
+  });
+  const { write: claim, isLoading: isClaiming } = useFairAuctionClaim({
+    ...claimConfig,
     onSuccess(data) {
       setToastOpen(true);
       setToastMessage("Claim successfully submitted");
@@ -258,6 +244,7 @@ export function Launchpad() {
           <div className="flex w-full flex-grow-[0.3] flex-col gap-2 sm:w-auto">
             <div className="relative">
               <input
+                // disabled={!hasStarted || hasEnded}
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 className={`w-full rounded border-none bg-transparent p-4 text-left text-base outline outline-1 outline-primary ${
