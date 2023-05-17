@@ -64,8 +64,11 @@ export const useTimeAndPrice = (
       ? Number(minRaise) / Number(tokensToDistributeFormatted)
       : Number(totalRaiseFormatted) / Number(tokensToDistributeFormatted);
 
+  const reachedMaxRaise = totalRaised >= maxRaiseAmount;
+
   return {
     hasEnded,
+    reachedMaxRaise,
     hasStarted,
     tokenPrice,
     minRaise,

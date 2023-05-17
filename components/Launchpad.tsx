@@ -92,8 +92,14 @@ export function Launchpad() {
       select: (data) => formatUnits(data, projectTokenDecimals!),
     });
 
-  const { hasEnded, hasStarted, tokenPrice, maxRaise, minRaise } =
-    useTimeAndPrice(saleTokenDecimals, projectTokenDecimals);
+  const {
+    hasEnded,
+    hasStarted,
+    tokenPrice,
+    maxRaise,
+    minRaise,
+    reachedMaxRaise,
+  } = useTimeAndPrice(saleTokenDecimals, projectTokenDecimals);
   const { days, hours, minutes } = useTimer();
 
   const { config: approveConfig } = usePrepareErc20Approve({
@@ -149,6 +155,7 @@ export function Launchpad() {
       isValidInput(amount) &&
       hasStarted &&
       !hasEnded &&
+      !reachedMaxRaise &&
       allowance &&
       !allowance.needsApproval,
   });
