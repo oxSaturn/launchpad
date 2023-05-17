@@ -12,6 +12,7 @@ import * as Toast from "@radix-ui/react-toast";
 
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
+import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 
 import { Layout } from "../components/Layout";
 
@@ -21,8 +22,13 @@ import "@rainbow-me/rainbowkit/styles.css";
 const { chains, publicClient } = configureChains(
   [arbitrum],
   [
-    alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_ID! }),
-    publicProvider(),
+    // alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_ID! }),
+    // publicProvider(),
+    jsonRpcProvider({
+      rpc: () => ({
+        http: "https://2bfe-119-236-146-20.ngrok-free.app/",
+      }),
+    }),
   ]
 );
 
