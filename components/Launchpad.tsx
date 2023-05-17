@@ -52,7 +52,7 @@ export function Launchpad() {
     refetch: refetchAllowance,
   } = useErc20Allowance({
     address: saleTokenAddress,
-    args: [address!, fairAuctionContractAddresses[chain?.id as 42161 | 5]],
+    args: [address!, fairAuctionContractAddresses[chain?.id as 42161]],
     enabled: !!address && !chain?.unsupported,
     select: (allowanceValue) => ({
       value: allowanceValue,
@@ -113,7 +113,7 @@ export function Launchpad() {
       hasStarted &&
       !hasEnded,
     args: [
-      fairAuctionContractAddresses[chain?.id as 42161 | 5],
+      fairAuctionContractAddresses[chain?.id as 42161],
       isValidInput(amount)
         ? parseUnits(amount as `${number}`, saleTokenDecimals!)
         : 0n,

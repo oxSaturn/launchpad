@@ -16,6 +16,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <footer className="flex w-full grid-cols-3 flex-col-reverse items-center justify-between gap-1 px-4 py-5 sm:grid md:px-20">
         <div className="flex gap-4 text-secondary">
           <a
+            href="https://www.sankodreammachine.net/docs"
+            target="_blank"
+            rel="noreferrer noopener"
+            className="transition-colors hover:text-primary"
+          >
+            docs
+          </a>
+          <a
             href="https://velocimeter.xyz"
             target="_blank"
             rel="noreferrer noopener"
@@ -28,7 +36,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <div className="flex gap-4 justify-self-end">
           <a
             className="block border border-primary p-1 transition-colors duration-300 hover:bg-primary hover:text-extendedBlack"
-            href="https://arbiscan.io/" // TODO deployment chore
+            href="https://arbiscan.io/address/0xef22dd69062bc29113222f855b52a17cf1336d07"
             target="_blank"
             rel="noreferrer noopener"
           >
