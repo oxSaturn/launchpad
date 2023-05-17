@@ -7,28 +7,22 @@ import {
   darkTheme,
 } from "@rainbow-me/rainbowkit";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { arbitrum, goerli } from "wagmi/chains";
+import { arbitrum } from "wagmi/chains";
 import * as Toast from "@radix-ui/react-toast";
 
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
-import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 
 import { Layout } from "../components/Layout";
 
 import "../styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
-// TODO chores
+
 const { chains, publicClient } = configureChains(
   [arbitrum],
   [
-    // alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_ID! }),
-    // publicProvider(),
-    jsonRpcProvider({
-      rpc: () => ({
-        http: "https://2bfe-119-236-146-20.ngrok-free.app/",
-      }),
-    }),
+    alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_ID! }),
+    publicProvider(),
   ]
 );
 
