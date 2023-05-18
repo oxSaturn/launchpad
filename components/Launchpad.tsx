@@ -238,7 +238,7 @@ export function Launchpad() {
               {formatCurrency(totalRaised)} {saleTokenSymbol ?? "USDC"}
             </div>
           </div>
-          <div className="flex flex-col gap-1">
+          {/* <div className="flex flex-col gap-1">
             <div className="capitalize">
               {projectTokenSymbol ?? "DMT"} price
             </div>
@@ -246,7 +246,7 @@ export function Launchpad() {
               {formatCurrency(tokenPrice?.toString())}{" "}
               {saleTokenSymbol ?? "USDC"}
             </div>
-          </div>
+          </div> */}
           <div className="flex flex-col gap-1">
             <div>Remaining time</div>
             <div className="font-siebB">{`${days}d ${hours}h ${minutes}m`}</div>
