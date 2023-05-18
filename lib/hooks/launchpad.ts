@@ -15,6 +15,8 @@ import {
   useFairAuctionTotalRaised,
 } from "../generated/wagmiGen";
 
+import { dmt_whitelist } from "../../dmt_whitelist";
+
 const SECOND = 1_000;
 const MINUTE = SECOND * 60;
 const HOUR = MINUTE * 60;
@@ -153,16 +155,12 @@ export function useTimer() {
       };
 }
 
-const getIsWhitelisted = async (address: string | undefined) => {
-  const whitelist = await fetch(
-    "https://anythingyouwantintheworld.com/DMT_whitelistsale.json"
-  );
-  const whitelistJson = (await whitelist.json()) as string[];
-
-  return whitelistJson.some(
+const getIsWhitelisted = (address: string | undefined) => {
+  const isWhitelisted = dmt_whitelist.some(
     (whitelistedAddress) =>
       whitelistedAddress.toLowerCase() === address?.toLowerCase()
   );
+  return isWhitelisted;
 };
 
 export function useIsWhitelisted() {
