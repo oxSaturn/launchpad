@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAccount, useNetwork, useBalance } from "wagmi";
+import { useAccount, useNetwork, useBalance, useQuery } from "wagmi";
 import { formatUnits } from "viem";
 import {
   useErc20Decimals,
@@ -14,6 +14,8 @@ import {
   useFairAuctionSaleToken,
   useFairAuctionTotalRaised,
 } from "../generated/wagmiGen";
+
+import { dmt_whitelist } from "../../dmt_whitelist";
 
 const SECOND = 1_000;
 const MINUTE = SECOND * 60;
@@ -151,4 +153,21 @@ export function useTimer() {
         minutes: 0,
         seconds: 0,
       };
+}
+
+const getIsWhitelisted = (address: string | undefined) => {
+  const isWhitelisted = dmt_whitelist.some(
+    (whitelistedAddress) =>
+      whitelistedAddress.toLowerCase() === address?.toLowerCase()
+  );
+  return isWhitelisted;
+};
+
+export function useIsWhitelisted() {
+  const { address } = useAccount();
+  return useQuery(["isWhitelisted", address], {
+    queryFn: () => getIsWhitelisted(address),
+    enabled: !!address,
+    initialData: false,
+  });
 }
