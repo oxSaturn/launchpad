@@ -252,7 +252,7 @@ export function Launchpad() {
             <div className="font-siebB">{`${days}d ${hours}h ${minutes}m`}</div>
           </div>
           <div className="flex flex-col gap-1">
-            <div>Min raise</div>
+            <div>Floor price</div>
             <div className="font-siebB">
               {formatCurrency(minRaise)} {saleTokenSymbol}
             </div>
