@@ -17,7 +17,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <div className="flex gap-4 text-secondary">
           <a
             href="https://docs.velocimeter.xyz"
-            href="https://docs.velocimeter.xyz"
+            
             target="_blank"
             rel="noreferrer noopener"
             className="transition-colors hover:text-primary"
