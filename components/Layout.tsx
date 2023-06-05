@@ -17,6 +17,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <div className="flex gap-4 text-secondary">
           <a
             href="https://docs.velocimeter.xyz"
+            href="https://docs.velocimeter.xyz"
             target="_blank"
             rel="noreferrer noopener"
             className="transition-colors hover:text-primary"
@@ -32,7 +33,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             velocimeter
           </a>
         </div>
-        <div className="justify-self-center text-2xl">Sanko GameCorp ©</div>
+        <div className="justify-self-center text-2xl">Velocimeter</div>
         <div className="flex gap-4 justify-self-end">
           <a
             className="block border border-primary p-1 transition-colors duration-300 hover:bg-primary hover:text-extendedBlack"

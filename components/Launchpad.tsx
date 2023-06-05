@@ -328,19 +328,7 @@ export function Launchpad() {
             </button>
           </div>
           <div className="flex flex-grow-[0.3] flex-col items-center gap-4">
-            <video
-              src="/dmtcoin.webm"
-              className="max-w-[112px]"
-              autoPlay
-              muted
-              loop
-            />
-            <button
-              onClick={onAirdropClick}
-              className="max-w-[215.5px] rounded border border-primary px-16 py-2 transition-shadow hover:shadow hover:shadow-secondary sm:py-4"
-            >
-              AIRDROP
-            </button>
+            flow
           </div>
         </div>
       </div>
