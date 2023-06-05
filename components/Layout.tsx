@@ -30,10 +30,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
             rel="noreferrer noopener"
             className="transition-colors hover:text-primary"
           >
-            velocimeter
+            Velocimeter
           </a>
         </div>
-        <div className="justify-self-center text-2xl">Velocimeter</div>
+        <div className="justify-self-center text-2xl">Velocimeter v3</div>
         <div className="flex gap-4 justify-self-end">
           <a
             className="block border border-primary p-1 transition-colors duration-300 hover:bg-primary hover:text-extendedBlack"
