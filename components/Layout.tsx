@@ -22,7 +22,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             rel="noreferrer noopener"
             className="transition-colors hover:text-primary"
           >
-            docs
+            Docs
           </a>
           <a
             href="https://velocimeter.xyz"
