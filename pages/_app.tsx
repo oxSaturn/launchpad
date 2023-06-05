@@ -52,8 +52,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         })}
       >
         <NextHead>
-          <title>$DMT Launchpad</title>
-          <meta property="og:title" content="$DMT Launchpad" />
+          <title>$FLOW Pulse</title>
+          <meta property="og:title" content="$FLOW Pulse" />
           <meta
             property="og:description"
             content="Velocimeter MultiChain Launchpad"
@@ -61,9 +61,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           <meta name="description" content="Velocimeter MultiChain Launchpad" />
           <meta
             name="keywords"
-            content="dApp, web3, launchpad, velocimeter, canto, arbitrum, wagmi, dexvaults, sanko, sanko dream machine, SankoGameCorp"
+            content="dApp, web3, launchpad, velocimeter, canto, pulsechain, arbitrum, wagmi, viem, blotr"
           />
-          <link rel="icon" href="/images/favicon.png" />
+          <link rel="icon" href="/images/logo-icon.png" />
         </NextHead>
         {mounted && (
           <Toast.Provider swipeDirection="right">
