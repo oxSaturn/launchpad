@@ -40,7 +40,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             rel="noreferrer noopener"
             className="transition-colors hover:text-primary"
           >
-            Velocimeter v3 is live on Pulse.
+            Velocimeter v3 is live on Pulse. Go to app 🔗
           </a>
           
           </div>
