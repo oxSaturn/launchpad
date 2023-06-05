@@ -8,8 +8,8 @@ const Home: NextPage = () => {
     <div className="flex flex-col items-center gap-10">
       <div className="flex max-h-[312px] items-center justify-center overflow-y-hidden">
         <Image
-          alt="sanko dream machine"
-          src="/sanko.png"
+          alt="Velocimeter V3"
+          src="/v.png"
           width={960}
           height={375}
           layout="intrinsic"

@@ -16,7 +16,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <footer className="flex w-full grid-cols-3 flex-col-reverse items-center justify-between gap-1 px-4 py-5 sm:grid md:px-20">
         <div className="flex gap-4 text-secondary">
           <a
-            href="https://www.sankodreammachine.net/docs"
+            href="https://docs.velocimeter.xyz"
             target="_blank"
             rel="noreferrer noopener"
             className="transition-colors hover:text-primary"
@@ -52,7 +52,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </a>
           <a
             className="block border border-primary p-1 transition-colors duration-300 hover:bg-primary hover:text-extendedBlack"
-            href="https://twitter.com/SankoGameCorp"
+            href="https://twitter.com/VelocimeterDEX"
             target="_blank"
             rel="noreferrer noopener"
           >

@@ -52,8 +52,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         })}
       >
         <NextHead>
-          <title>$DMT Launchpad</title>
-          <meta property="og:title" content="$DMT Launchpad" />
+          <title>Velocimeter v3 on Pulse</title>
+          <meta property="og:title" content="Velocimeter v3 Launch Sale" />
           <meta
             property="og:description"
             content="Velocimeter MultiChain Launchpad"
