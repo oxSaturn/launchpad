@@ -37,7 +37,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <div className="flex gap-4 justify-self-end">
           <a
             className="block border border-primary p-1 transition-colors duration-300 hover:bg-primary hover:text-extendedBlack"
-            href="https://arbiscan.io/address/0xef22dd69062bc29113222f855b52a17cf1336d07"
+            href="https://scan.pulsechain.com/address/0x54Ea937e12a4011d69FE1200DFBfF36d0E7A4C64"
             target="_blank"
             rel="noreferrer noopener"
           >

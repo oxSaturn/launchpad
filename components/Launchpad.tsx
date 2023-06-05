@@ -347,7 +347,7 @@ export function Launchpad() {
           altText="Look on arbiscan with hash"
         >
           <a
-            href={`https://arbiscan.io/tx/${toastHash}`}
+            href={`https://scan.pulsechain.com/tx/${toastHash}`}
             target="_blank"
             rel="noreferrer noopener"
             className="text-sm text-secondary underline transition-colors hover:text-primary hover:no-underline"
