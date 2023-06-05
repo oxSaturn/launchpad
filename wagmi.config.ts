@@ -1,5 +1,5 @@
-import { defineConfig } from '@wagmi/cli'
-import {  react } from '@wagmi/cli/plugins'
+import { defineConfig } from "@wagmi/cli";
+import { react } from "@wagmi/cli/plugins";
 import { erc20ABI } from "wagmi";
 
 import { fairAuctionABI } from "./lib/abis/fairAuction";

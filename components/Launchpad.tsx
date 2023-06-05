@@ -19,7 +19,6 @@ import {
 } from "../lib/generated/wagmiGen";
 import { fairAuctionContractAddresses } from "../lib/config";
 import {
-  useIsWhitelisted,
   useProjectTokenData,
   useSaleTokenData,
   useTimeAndPrice,
@@ -53,7 +52,7 @@ export function Launchpad() {
     refetch: refetchAllowance,
   } = useErc20Allowance({
     address: saleTokenAddress,
-    args: [address!, fairAuctionContractAddresses[chain?.id as 42161]],
+    args: [address!, fairAuctionContractAddresses[chain?.id as 369]],
     enabled: !!address && !chain?.unsupported,
     select: (allowanceValue) => ({
       value: allowanceValue,
@@ -108,7 +107,7 @@ export function Launchpad() {
       hasStarted &&
       !hasEnded,
     args: [
-      fairAuctionContractAddresses[chain?.id as 42161],
+      fairAuctionContractAddresses[chain?.id as 369],
       isValidInput(amount)
         ? parseUnits(amount as `${number}`, saleTokenDecimals!)
         : 0n,
@@ -205,8 +204,6 @@ export function Launchpad() {
     },
   });
 
-  const { data: isWhitelisted } = useIsWhitelisted();
-
   const setMaxAmount = () => {
     if (saleTokenBalance) {
       setAmount(saleTokenBalance.formatted);
@@ -229,7 +226,6 @@ export function Launchpad() {
             height={62.5}
             layout="fixed"
           />
-          {isWhitelisted && <div>You are whitelisted</div>}
         </div>
         <div className="mb-4 grid w-full grid-cols-2 flex-col items-start justify-between gap-4 text-sm sm:flex sm:text-base lg:flex-row lg:items-center">
           <div className="flex flex-col gap-1">

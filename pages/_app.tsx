@@ -7,10 +7,9 @@ import {
   darkTheme,
 } from "@rainbow-me/rainbowkit";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { arbitrum } from "wagmi/chains";
+import { pulsechain } from "wagmi/chains";
 import * as Toast from "@radix-ui/react-toast";
 
-import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 
 import { Layout } from "../components/Layout";
@@ -19,11 +18,8 @@ import "../styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
 
 const { chains, publicClient } = configureChains(
-  [arbitrum],
-  [
-    alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_ID! }),
-    publicProvider(),
-  ]
+  [pulsechain],
+  [publicProvider()]
 );
 
 const { connectors } = getDefaultWallets({
@@ -45,7 +41,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider
         chains={chains}
-        initialChain={arbitrum}
+        initialChain={pulsechain}
         showRecentTransactions={true}
         theme={darkTheme({
           accentColor: "rgb(0, 243, 203)",
