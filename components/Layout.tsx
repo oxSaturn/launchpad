@@ -30,10 +30,20 @@ export function Layout({ children }: { children: React.ReactNode }) {
             rel="noreferrer noopener"
             className="transition-colors hover:text-primary"
           >
-            Velocimeter
+            Canto Velocimeter
           </a>
         </div>
-        <div className="justify-self-center text-2xl">Velocimeter v3</div>
+        <div className="justify-self-center text-2xl">
+        <a
+            href="https://pulse.velocimeter.xyz"
+            target="_blank"
+            rel="noreferrer noopener"
+            className="transition-colors hover:text-primary"
+          >
+            Velocimeter v3 is live on Pulse.
+          </a>
+          
+          </div>
         <div className="flex gap-4 justify-self-end">
           <a
             className="block border border-primary p-1 transition-colors duration-300 hover:bg-primary hover:text-extendedBlack"
