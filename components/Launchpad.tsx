@@ -219,13 +219,13 @@ export function Launchpad() {
     <>
       <div className="flex flex-col gap-3 sm:flex-row lg:min-w-[1024px] lg:flex-col">
         <div className="mb-4 flex w-full flex-col items-center justify-between self-center sm:mb-0 sm:self-auto lg:flex-row">
-          {/* <Image
+           {/* <Image
             alt="DMT"
-            src="/dmt.png"
+            src="/images/v.png"
             width={160}
             height={62.5}
             layout="fixed"
-          /> */}
+          />  */}
         </div>
         <div className="mb-4 grid w-full grid-cols-2 flex-col items-start justify-between gap-4 text-sm sm:flex sm:text-base lg:flex-row lg:items-center">
           <div className="flex flex-col gap-1">
@@ -327,9 +327,7 @@ export function Launchpad() {
                 : "Deposit"}
             </button>
           </div>
-          <div className="flex flex-grow-[0.3] flex-col items-center gap-4">
-            flow
-          </div>
+         
         </div>
       </div>
       <Toast.Root
