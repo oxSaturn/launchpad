@@ -218,6 +218,7 @@ export function Launchpad() {
   return (
     <>
       <div className="flex flex-col gap-3 sm:flex-row lg:min-w-[1024px] lg:flex-col">
+        <div>The maximum $FLOW that will be sold is 5,000,000. Emissions for epoch 1 will be 13,000,000. 50% of emissions will be on the FLOW-WPLS pair during epoch 1.</div>
         <div className="mb-4 flex w-full flex-col items-center justify-between self-center sm:mb-0 sm:self-auto lg:flex-row"></div>
         <div className="mb-4 grid w-full grid-cols-2 flex-col items-start justify-between gap-4 text-sm sm:flex sm:text-base lg:flex-row lg:items-center">
           <div className="flex flex-col gap-1">
