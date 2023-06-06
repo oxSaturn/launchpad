@@ -219,7 +219,6 @@ export function Launchpad() {
     <>
       <div className="flex flex-col gap-3 sm:flex-row lg:min-w-[1024px] lg:flex-col">
         <div className="mb-4 flex w-full flex-col items-center justify-between self-center sm:mb-0 sm:self-auto lg:flex-row"></div>
-
         <div className="mb-4 grid w-full grid-cols-2 flex-col items-start justify-between gap-4 text-sm sm:flex sm:text-base lg:flex-row lg:items-center">
           <div className="flex flex-col gap-1">
             <div className="text-secondary">Total raised</div>
@@ -328,11 +327,11 @@ export function Launchpad() {
             Read more about Velocimeters Tokenomics on Pulse{" "}
             <a
               href="https://docs.velocimeter.xyz/pulse-tokenomics"
-              className="underline"
               target="_blank"
               rel="noopener noreferrer"
+              className="text-primary underline transition-colors hover:text-secondary hover:no-underline"
             >
-              here
+              here ↗
             </a>
           </li>
         </ul>
