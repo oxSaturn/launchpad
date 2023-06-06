@@ -218,44 +218,27 @@ export function Launchpad() {
   return (
     <>
       <div className="flex flex-col gap-3 sm:flex-row lg:min-w-[1024px] lg:flex-col">
-        <div className="mb-4 flex w-full flex-col items-center justify-between self-center sm:mb-0 sm:self-auto lg:flex-row">
-           {/* <Image
-            alt="DMT"
-            src="/images/v.png"
-            width={160}
-            height={62.5}
-            layout="fixed"
-          />  */}
-        </div>
+        <div className="mb-4 flex w-full flex-col items-center justify-between self-center sm:mb-0 sm:self-auto lg:flex-row"></div>
         <div className="mb-4 grid w-full grid-cols-2 flex-col items-start justify-between gap-4 text-sm sm:flex sm:text-base lg:flex-row lg:items-center">
           <div className="flex flex-col gap-1">
-            <div>Total raised</div>
-            <div className="font-siebB">
+            <div className="text-secondary">Total raised</div>
+            <div className="font-semibold">
               {formatCurrency(totalRaised)} {saleTokenSymbol ?? "USDC"}
             </div>
           </div>
-          {/* <div className="flex flex-col gap-1">
-            <div className="capitalize">
-              {projectTokenSymbol ?? "DMT"} price
-            </div>
-            <div className="font-siebB">
-              {formatCurrency(tokenPrice?.toString())}{" "}
-              {saleTokenSymbol ?? "USDC"}
-            </div>
-          </div> */}
           <div className="flex flex-col gap-1">
-            <div>Remaining time</div>
-            <div className="font-siebB">{`${days}d ${hours}h ${minutes}m`}</div>
+            <div className="text-secondary">Remaining time</div>
+            <div className="font-semibold">{`${days}d ${hours}h ${minutes}m`}</div>
           </div>
           <div className="flex flex-col gap-1">
-            <div>Amount to raise before price increases</div>
-            <div className="font-siebB">
+            <div className="text-secondary">Price hike raise</div>
+            <div className="font-semibold">
               {formatCurrency(minRaise)} {saleTokenSymbol}
             </div>
           </div>
           <div className="flex flex-col gap-1">
-            <div>Max raise</div>
-            <div className="font-siebB">
+            <div className="text-secondary">Max raise</div>
+            <div className="font-semibold">
               {formatCurrency(maxRaise)} {saleTokenSymbol}
             </div>
           </div>
@@ -327,7 +310,6 @@ export function Launchpad() {
                 : "Deposit"}
             </button>
           </div>
-         
         </div>
       </div>
       <Toast.Root

@@ -12,9 +12,12 @@ module.exports = {
   },
   theme: {
     extend: {
+      fontFamily: {
+        plexSans: ["IBM Plex Sans", ...defaultTheme.fontFamily.sans],
+      },
       colors: {
-        primary: "#08eccc",
-        secondary: "#08eccc",
+        primary: "#14dbb8",
+        secondary: "#36a186",
         accent: "#ffda58",
         neutral: "#222222",
         extendedBlack: "#111",

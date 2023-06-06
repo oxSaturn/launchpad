@@ -63,7 +63,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             name="keywords"
             content="dApp, web3, launchpad, velocimeter, canto, pulsechain, arbitrum, wagmi, viem, blotr"
           />
-          <link rel="icon" href="/images/logo-icon.png" />
+          <link rel="icon" href="/images/v.png" />
         </NextHead>
         {mounted && (
           <Toast.Provider swipeDirection="right">
