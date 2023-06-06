@@ -218,10 +218,8 @@ export function Launchpad() {
   return (
     <>
       <div className="flex flex-col gap-3 sm:flex-row lg:min-w-[1024px] lg:flex-col">
-        
-
         <div className="mb-4 flex w-full flex-col items-center justify-between self-center sm:mb-0 sm:self-auto lg:flex-row"></div>
-        <div>The maximum $FLOW that will be sold is 5,000,000. Funds raised will be used to provide initial liquidity for FLOW-WPLS. Emissions for epoch 1 will be 13,000,000. 50% of emissions will be on the FLOW-WPLS pair during epoch 1. Read more about Velocimeters Tokenomics on Pulse <a href="https://docs.velocimeter.xyz/pulse-tokenomics">here</a></div>
+
         <div className="mb-4 grid w-full grid-cols-2 flex-col items-start justify-between gap-4 text-sm sm:flex sm:text-base lg:flex-row lg:items-center">
           <div className="flex flex-col gap-1">
             <div className="text-secondary">Total raised</div>
@@ -314,6 +312,30 @@ export function Launchpad() {
             </button>
           </div>
         </div>
+      </div>
+      <div className="mx-5 flex px-5 text-gray-400 lg:min-w-[1024px]">
+        <ul className="list-decimal space-y-1">
+          <li>The maximum $FLOW that will be sold is 5,000,000.</li>
+          <li>
+            Funds raised will be used to provide initial liquidity for
+            FLOW-WPLS.
+          </li>
+          <li> Emissions for epoch 1 will be 13,000,000.</li>
+          <li>
+            50% of emissions will be on the FLOW-WPLS pair during epoch 1.
+          </li>
+          <li>
+            Read more about Velocimeters Tokenomics on Pulse{" "}
+            <a
+              href="https://docs.velocimeter.xyz/pulse-tokenomics"
+              className="underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              here
+            </a>
+          </li>
+        </ul>
       </div>
       <Toast.Root
         className="rounded-md bg-[#111] p-4 text-left shadow shadow-secondary radix-state-closed:animate-hide radix-state-open:animate-slideIn radix-swipe-cancel:translate-x-0 radix-swipe-cancel:transition-[transform_200ms_ease-out] radix-swipe-end:animate-swipeOut radix-swipe-move:translate-x-[var(--radix-toast-swipe-move-x)]"
