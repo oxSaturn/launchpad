@@ -24,6 +24,13 @@ module.exports = {
         success: "#07bc0c",
         warning: "#ffda58",
         error: "#ff4141",
+        pulse: {
+          cyan: "#00eaff",
+          blue: "#0080ff",
+          purple: "#8000ff",
+          pink: "#e619e6",
+          red: "#f00",
+        },
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(ellipse, var(--tw-gradient-stops))",
