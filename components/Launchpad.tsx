@@ -1,10 +1,10 @@
 import { useState } from "react";
+import useSWR from "swr";
 import Image from "next/image";
 import { useAccount, useNetwork, useWaitForTransaction } from "wagmi";
 import * as Toast from "@radix-ui/react-toast";
 import { formatUnits, parseUnits, zeroAddress } from "viem";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
-
 import {
   useErc20Allowance,
   useErc20Approve,
@@ -26,6 +26,35 @@ import {
 } from "../lib/hooks/launchpad";
 import { formatCurrency, isEnoughAllowance, isValidInput } from "../lib/utils";
 
+const chain = "pulse";
+const tokenAddress = "0xa1077a294dde1b09bb078844df40758a5d0f9a27";
+const tokenId = chain + ":" + tokenAddress;
+/**
+ * A component that displays value in USD
+ */
+function UsdValue({ value }: { value: string | undefined }) {
+  const { data, error, isLoading } = useSWR(
+    `https://coins.llama.fi/prices/current/${tokenId}?searchWidth=4h`,
+    (...args) => fetch(...args).then((resp) => resp.json())
+  );
+  if (!value) return <></>;
+  if (isLoading) return <>...</>;
+  if (error) return <></>;
+  const token = data.coins[tokenId];
+  return (
+    <div>
+      <span className="text-sm text-gray-400">
+        ≈{" "}
+        {Intl.NumberFormat("en-US", {
+          notation: "compact",
+          maximumFractionDigits: 2,
+          style: "currency",
+          currency: "USD",
+        }).format(Number(value) * token.price)}
+      </span>
+    </div>
+  );
+}
 export function Launchpad() {
   const [toastOpen, setToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
@@ -215,13 +244,14 @@ export function Launchpad() {
   return (
     <>
       <div className="flex flex-col gap-3 sm:flex-row lg:min-w-[1024px] lg:flex-col">
-        <div className="mb-4 flex w-full flex-col items-center justify-between self-center sm:mb-0 sm:self-auto lg:flex-row"></div>
-        <div className="mb-4 grid w-full grid-cols-2 flex-col items-start justify-between gap-4 text-sm sm:flex sm:text-base lg:flex-row lg:items-center">
-          <div className="flex flex-col gap-1">
+        <div className="mb-4 flex w-full flex-col items-center justify-between self-center sm:mb-0 sm:hidden sm:self-auto lg:flex-row"></div>
+        <div className="mb-10 grid w-full grid-cols-2 flex-col items-start justify-between gap-4 text-sm sm:flex sm:text-base lg:flex-row lg:items-start">
+          <div className="flex flex-col items-start gap-1">
             <div className="text-secondary">Total raised</div>
             <div className="font-semibold">
               {formatCurrency(totalRaised)} {saleTokenSymbol ?? "USDC"}
             </div>
+            <UsdValue value={totalRaised} />
           </div>
           <div className="flex flex-col gap-1">
             <div className="text-secondary">Remaining time</div>
@@ -232,12 +262,14 @@ export function Launchpad() {
             <div className="font-semibold">
               {formatCurrency(minRaise)} {saleTokenSymbol}
             </div>
+            <UsdValue value={minRaise} />
           </div>
           <div className="flex flex-col gap-1">
             <div className="text-secondary">Max raise</div>
             <div className="font-semibold">
               {formatCurrency(maxRaise)} {saleTokenSymbol}
             </div>
+            <UsdValue value={maxRaise} />
           </div>
         </div>
         <div className="flex w-full flex-col items-center justify-between gap-4 lg:flex-row">
