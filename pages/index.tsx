@@ -6,7 +6,7 @@ import { Launchpad } from "../components/Launchpad";
 const Home: NextPage = () => {
   return (
     <div className="flex flex-col items-center gap-10">
-      <div className="flex max-h-[312px] items-center justify-center overflow-y-hidden">
+      <div className="mx-5 flex max-h-[312px] items-center justify-center overflow-y-hidden lg:mx-0">
         <Image
           alt="Velocimeter V3"
           src="/images/long.png"
