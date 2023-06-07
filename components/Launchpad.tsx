@@ -65,7 +65,7 @@ export function Launchpad() {
   });
 
   const { data: totalRaised } = useFairAuctionTotalRaised({
-    enabled: !chain?.unsupported && !!saleTokenDecimals,
+    enabled: !!saleTokenDecimals,
     select: (data) => formatUnits(data, saleTokenDecimals!),
     watch: true,
   });
@@ -208,9 +208,6 @@ export function Launchpad() {
     if (saleTokenBalance) {
       setAmount(saleTokenBalance.formatted);
     }
-  };
-  const onAirdropClick = () => {
-    window.open("https://sankodreammachine.net/airdrop", "_blank");
   };
 
   const isWaitingForTx =

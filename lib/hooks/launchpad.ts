@@ -77,15 +77,14 @@ export const useTimeAndPrice = (
 
 export const useSaleTokenData = () => {
   const { address } = useAccount();
-  const { chain } = useNetwork();
-  const { data: saleTokenAddress } = useFairAuctionSaleToken({
-    enabled: !!address && !chain?.unsupported,
-  });
+  const { data: saleTokenAddress } = useFairAuctionSaleToken();
   const { data: saleTokenSymbol } = useErc20Symbol({
     address: saleTokenAddress,
+    enabled: !!saleTokenAddress,
   });
   const { data: saleTokenDecimals } = useErc20Decimals({
     address: saleTokenAddress,
+    enabled: !!saleTokenAddress,
   });
   const { data: saleTokenBalance } = useBalance({
     address,
@@ -101,11 +100,7 @@ export const useSaleTokenData = () => {
 };
 
 export const useProjectTokenData = () => {
-  const { chain } = useNetwork();
-
-  const { data: projectTokenAddress } = useFairAuctionProjectToken({
-    enabled: !chain?.unsupported,
-  });
+  const { data: projectTokenAddress } = useFairAuctionProjectToken();
   const { data: projectTokenSymbol } = useErc20Symbol({
     address: projectTokenAddress,
     enabled: !!projectTokenAddress,
