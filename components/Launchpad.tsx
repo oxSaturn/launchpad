@@ -248,25 +248,25 @@ export function Launchpad() {
         <div className="mb-10 grid w-full grid-cols-2 flex-col items-start justify-between gap-4 text-sm sm:flex sm:text-base lg:flex-row lg:items-start">
           <div className="flex flex-col items-start gap-1">
             <div className="text-secondary">Total raised</div>
-            <div className="font-semibold">
+            <div className="bg-gradient-to-r from-pulse-cyan to-pulse-pink bg-clip-text font-semibold text-transparent">
               {formatCurrency(totalRaised)} {saleTokenSymbol ?? "USDC"}
             </div>
             <UsdValue value={totalRaised} />
           </div>
           <div className="flex flex-col gap-1">
             <div className="text-secondary">Remaining time</div>
-            <div className="font-semibold">{`${days}d ${hours}h ${minutes}m`}</div>
+            <div className="bg-gradient-to-r from-pulse-cyan to-pulse-pink bg-clip-text font-semibold text-transparent">{`${days}d ${hours}h ${minutes}m`}</div>
           </div>
           <div className="flex flex-col gap-1">
             <div className="text-secondary">Price hike raise</div>
-            <div className="font-semibold">
+            <div className="bg-gradient-to-r from-pulse-cyan to-pulse-pink bg-clip-text font-semibold text-transparent">
               {formatCurrency(minRaise)} {saleTokenSymbol}
             </div>
             <UsdValue value={minRaise} />
           </div>
           <div className="flex flex-col gap-1">
             <div className="text-secondary">Max raise</div>
-            <div className="font-semibold">
+            <div className="bg-gradient-to-r from-pulse-cyan to-pulse-pink bg-clip-text font-semibold text-transparent">
               {formatCurrency(maxRaise)} {saleTokenSymbol}
             </div>
             <UsdValue value={maxRaise} />
